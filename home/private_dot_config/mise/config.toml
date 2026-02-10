@@ -1,0 +1,5 @@
+[tools]
+neovim = "latest"
+fzf = "latest"
+lazygit = "latest"
+

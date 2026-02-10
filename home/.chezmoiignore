@@ -1,0 +1,36 @@
+# .chezmoiignore
+#
+# Strategy:
+#   1. "*" ignores all files and directories
+#   2. "!" allows specific entries through
+#   3. To allow contents of a directory, the parent must be allowed first
+#
+# Patterns refer to target (home directory) paths, not source paths.
+
+*                              # Ignore everything; entries below opt back in with "!"
+
+# --- Top-level dotfiles ------------------------------------------------------
+
+!.bashrc                       # Bash interactive shell config
+!.bash_profile                 # Bash login shell config
+!.profile                      # POSIX login shell config
+!.gitconfig                    # Git global config
+
+!.tmux.conf                    # tmux config
+!.tmux                         # tmux plugin/script directory
+!.tmux/**
+
+# --- .config/* ---------------------------------------------------------------
+# !.config must come first; without it, nothing below takes effect.
+
+!.config                       # XDG config base directory
+
+!.config/nvim                  # Neovim config
+!.config/nvim/**
+
+!.config/lazygit               # Lazygit TUI config
+!.config/lazygit/**
+
+!.config/gh                    # GitHub CLI config
+!.config/gh/config.yml         # Exclude hosts.yml as it contains tokens
+

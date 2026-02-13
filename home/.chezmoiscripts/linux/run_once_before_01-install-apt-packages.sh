@@ -17,6 +17,7 @@ sudo apt install -y \
     openssh-server \
     tmux \
     wget \
-    gh
+    gh \
+    poppler-utils
 
 

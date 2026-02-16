@@ -5,3 +5,8 @@ lazygit = "latest"
 yazi = "latest"
 glow = "latest"
 
+[settings]
+# Exclude chezmoi's source directory from mise's config file discovery.
+# Without this, working inside ~/.local/share/chezmoi causes mise to detect this file's own copy as an untrusted config.
+ignored_config_paths = ["~/.local/share/chezmoi"]
+

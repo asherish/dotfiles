@@ -26,7 +26,11 @@
 !.config                       # XDG config base directory
 
 !.config/nvim                  # Neovim config
-!.config/nvim/**
+!.config/nvim/init.lua         # Entry point for Neovim configuration
+!.config/nvim/lazyvim.json     # LazyVim extras enablement settings
+!.config/nvim/stylua.toml      # StyLua formatter config
+!.config/nvim/lua              # Lua config directory
+!.config/nvim/lua/**
 
 !.config/lazygit               # Lazygit TUI config
 !.config/lazygit/**

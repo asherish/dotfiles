@@ -1,0 +1,14 @@
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_12-setup-sshd-accept-env.sh.tmpl" | sha256sum }}
+set -euo pipefail
+
+if ! grep -q 'TERM_PROGRAM' /etc/ssh/sshd_config; then
+  echo "Adding TERM_PROGRAM to sshd AcceptEnv..."
+  sudo sed -i 's/^AcceptEnv LANG LC_\*/AcceptEnv LANG LC_* TERM_PROGRAM/' /etc/ssh/sshd_config
+  sudo systemctl restart ssh
+else
+  echo "TERM_PROGRAM already in sshd AcceptEnv, skipping."
+fi
+
+sudo systemctl restart ssh
+

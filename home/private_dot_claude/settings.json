@@ -8,10 +8,24 @@
   },
   "language": "Japanese",
   "permissions": {
+    "defaultMode": "default",
     "allow": [
       "Read",
+      "Glob",
       "Grep",
-      "Glob"
+      "LS",
+      "NotebookRead",
+      "TodoRead",
+      "WebFetch",
+      "WebSearch",
+
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)"
     ]
   }
 }

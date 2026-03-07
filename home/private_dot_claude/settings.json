@@ -7,6 +7,19 @@
     "code-simplifier@claude-plugins-official": true
   },
   "language": "Japanese",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/skill-evaluation.sh"
+          }
+        ]
+      }
+    ]
+  },
   "permissions": {
     "defaultMode": "default",
     "allow": [

@@ -38,3 +38,11 @@
 !.config/gh                    # GitHub CLI config
 !.config/gh/config.yml         # Exclude hosts.yml as it contains tokens
 
+# --- .claude/* ---------------------------------------------------------------
+
+!.claude                       # Claude Code config directory
+!.claude/CLAUDE.md             # Global instructions for Claude Code
+!.claude/settings.json         # Claude Code settings
+!.claude/hooks                 # Claude Code hooks directory
+!.claude/hooks/**
+

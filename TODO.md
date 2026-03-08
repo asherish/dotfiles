@@ -26,7 +26,9 @@
 
 ### mise tools
 
-- [ ] Runtimes: `node`, `rust`, `uv`
+- [x] Runtimes: `uv`
+- [x] Runtimes: `node`
+- [ ] Runtimes: `rust`
 - [ ] CLI: `lazydocker`, `yazi`, `ripgrep`, `fd`, `sd`, `btop`, `eza`, `bat`, `zoxide`, `delta`
 
 ### Applications

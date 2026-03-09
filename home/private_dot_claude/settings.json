@@ -1,4 +1,5 @@
 {
+  "effortLevel": "high",
   "includeCoAuthoredBy": false,
   "enabledPlugins": {
     "commit-commands@claude-plugins-official": true,

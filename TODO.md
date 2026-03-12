@@ -5,7 +5,7 @@
 ### Configuration
 
 - [ ] Shell: migrate to zsh and configure prompt (starship / powerlevel10k / oh-my-zsh)
-- [ ] Neovim `init.lua`
+- [x] Neovim `init.lua` (LazyVim)
 - [ ] lazygit `config.yml`
 
 ## Phase 2: Container Support
@@ -19,21 +19,21 @@
 ### apt packages
 
 - [ ] Basic: `zsh`, `unzip`, `tar`, `p7zip-full`, `rsync`, `xclip`, `xsel`, `gpg`, `watch`
-- [ ] Build: `make`, `cmake`, `pkg-config`
+- [ ] Build: `cmake`, `pkg-config` (`build-essential` installed)
 - [ ] Libraries: `libssl-dev`, `libffi-dev`, `libsqlite3-dev`, `libbz2-dev`, `libreadline-dev`, `libncurses-dev`, `zlib1g-dev`, `liblzma-dev`
 - [ ] Docker: `docker-ce`, `docker-ce-cli`, `docker-compose-plugin`
 - [ ] Monitoring: `nvtop`, `aptitude`
 
 ### mise tools
 
-- [x] Runtimes: `uv`
-- [x] Runtimes: `node`
+- [x] Runtimes: `uv`, `node`, `yarn`
 - [ ] Runtimes: `rust`
-- [ ] CLI: `lazydocker`, `yazi`, `ripgrep`, `fd`, `sd`, `btop`, `eza`, `bat`, `zoxide`, `delta`
+- [x] CLI (installed): `lazygit`, `yazi`, `fzf`, `glow`, `neovim`
+- [ ] CLI (remaining): `lazydocker`, `ripgrep`, `fd`, `sd`, `btop`, `eza`, `bat`, `zoxide`, `delta`
 
 ### Applications
 
-- [ ] Claude Code (`npm i -g @anthropic-ai/claude-code` via mise node)
+- [x] Claude Code (settings, hooks, CLAUDE.md managed via chezmoi)
 
 ## Phase 4: Cross-Platform
 

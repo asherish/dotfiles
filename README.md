@@ -1,7 +1,7 @@
 # dotfiles
 
 Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).  
-Currently supports Ubuntu 24.04, with macOS and Windows support planned.
+Currently supports Ubuntu 24.04 (bare metal and Docker containers), with macOS and Windows support planned.
 
 ---
 
@@ -39,6 +39,23 @@ This command will:
 - Deploy all configuration files
 
 Optionally, you can also manually register API keys, SSH keys, or other credentials if needed.
+
+---
+
+## Container Setup
+
+When running inside a Docker container, chezmoi automatically detects the container environment via `/.dockerenv` or the `container` environment variable and adjusts its behavior:
+
+- **Shell**: Uses bash instead of zsh
+- **System scripts**: Skips apt package installation, Tailscale setup, and sshd configuration (managed by Dockerfile)
+- **mise tools**: Installs only essential tools (neovim, fzf, lazygit, yazi, glow, starship), skipping uv, node, and yarn
+
+Apply dotfiles after the container is running:
+
+```bash
+# Install chezmoi and apply dotfiles inside a running container
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:asherish/dotfiles.git
+```
 
 ---
 

@@ -6,7 +6,7 @@
 
 - [x] Shell: migrate to zsh and configure prompt (starship)
 - [x] Neovim `init.lua` (LazyVim)
-- [ ] lazygit `config.yml`
+- [x] lazygit `config.yml`
 
 ## Phase 2: Container Support
 

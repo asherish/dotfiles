@@ -11,9 +11,8 @@
 
 # --- Top-level dotfiles ------------------------------------------------------
 
-!.bashrc                       # Bash interactive shell config
-!.bash_profile                 # Bash login shell config
-!.profile                      # POSIX login shell config
+!.zshenv                       # Zsh environment config
+!.zshrc                        # Zsh interactive shell config
 !.gitconfig                    # Git global config
 
 !.tmux.conf                    # tmux config
@@ -37,6 +36,8 @@
 
 !.config/gh                    # GitHub CLI config
 !.config/gh/config.yml         # Exclude hosts.yml as it contains tokens
+
+!.config/starship.toml         # Starship prompt config
 
 # --- .claude/* ---------------------------------------------------------------
 

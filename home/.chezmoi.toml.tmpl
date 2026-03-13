@@ -1,6 +1,9 @@
 {{- $name := promptStringOnce . "name" "Full name" "asherish" -}}
 {{- $email := promptStringOnce . "email" "Email address" "atsuya.asher.ishikawa@gmail.com" -}}
-{{- $is_container := or (stat "/.dockerenv") (ne (env "container") "") | not | not -}}
+{{- $is_container := false -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   $is_container = or (stat "/.dockerenv") (ne (env "container") "") | not | not -}}
+{{- end -}}
 
 [data]
     name = {{ $name | quote }}

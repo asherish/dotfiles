@@ -1,3 +1,4 @@
+{{ if not .is_container -}}
 #!/bin/bash
 # hash: {{ include ".chezmoiscripts/linux/run_onchange_before_01-install-apt-packages.sh.tmpl" | sha256sum }}
 set -euo pipefail
@@ -22,5 +23,6 @@ sudo apt install -y \
     gh \
     poppler-utils \
     zsh
+{{ end -}}
 
 

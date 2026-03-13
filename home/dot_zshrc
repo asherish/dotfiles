@@ -27,6 +27,12 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+if command -v bat &>/dev/null; then
+    alias cat='bat'
+fi
+if command -v btop &>/dev/null; then
+    alias htop='btop'
+fi
 
 # --- zinit (Plugin Manager) ---
 ZINIT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"

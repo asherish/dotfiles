@@ -11,7 +11,10 @@
 
 # --- Top-level dotfiles ------------------------------------------------------
 
-{{ if .is_container }}
+{{ if eq .chezmoi.os "windows" }}
+!.bashrc                       # Git Bash interactive shell config
+!.profile                      # Git Bash environment config
+{{ else if .is_container }}
 !.bashrc                       # Bash interactive shell config (container)
 !.profile                      # Bash environment config (container)
 {{ else }}
@@ -20,13 +23,17 @@
 {{ end }}
 !.gitconfig                    # Git global config
 
-!.tmux.conf                    # tmux config
+{{ if ne .chezmoi.os "windows" }}
+!.tmux.conf                    # tmux config (Linux only)
 !.tmux                         # tmux plugin/script directory
 !.tmux/**
+{{ else }}
+!.wezterm.lua                  # WezTerm terminal emulator config (Windows only)
+{{ end }}
 
-# --- .config/* ---------------------------------------------------------------
-# !.config must come first; without it, nothing below takes effect.
+# --- .config/* (Linux only) --------------------------------------------------
 
+{{ if ne .chezmoi.os "windows" }}
 !.config                       # XDG config base directory
 
 !.config/nvim                  # Neovim config
@@ -44,6 +51,13 @@
 
 !.config/starship.toml         # Starship prompt config
 
+!.config/mise                  # mise config
+!.config/mise/**
+
+!.config/yazi                  # Yazi file manager config
+!.config/yazi/**
+{{ end }}
+
 # --- .claude/* ---------------------------------------------------------------
 
 !.claude                       # Claude Code config directory
@@ -51,4 +65,3 @@
 !.claude/settings.json         # Claude Code settings
 !.claude/hooks                 # Claude Code hooks directory
 !.claude/hooks/**
-

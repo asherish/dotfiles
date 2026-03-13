@@ -35,7 +35,7 @@ This command will:
 
 - Install chezmoi
 - Clone this repository
-- Run setup scripts (apt packages, GUI apps, mise, etc.)
+- Run setup scripts (apt packages, Docker, Tailscale, mise, etc.)
 - Deploy all configuration files
 
 Optionally, you can also manually register API keys, SSH keys, or other credentials if needed.
@@ -47,7 +47,7 @@ Optionally, you can also manually register API keys, SSH keys, or other credenti
 When running inside a Docker container, chezmoi automatically detects the container environment via `/.dockerenv` or the `container` environment variable and adjusts its behavior:
 
 - **Shell**: Uses bash instead of zsh
-- **System scripts**: Skips apt package installation, Tailscale setup, and sshd configuration (managed by Dockerfile)
+- **System scripts**: Skips apt package installation, Docker setup, Tailscale setup, and sshd configuration (managed by Dockerfile)
 - **mise tools**: Installs only essential tools (neovim, fzf, lazygit, yazi, glow, starship), skipping uv, node, and yarn
 
 Apply dotfiles after the container is running:

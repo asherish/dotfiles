@@ -1,0 +1,8 @@
+# Environment variables for all zsh sessions (login, interactive, scripts).
+
+export EDITOR=nvim
+export VISUAL=nvim
+
+# Ensure ~/.local/bin is in PATH
+typeset -U path
+path=("$HOME/.local/bin" $path)

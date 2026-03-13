@@ -4,7 +4,7 @@
 
 ### Configuration
 
-- [ ] Shell: migrate to zsh and configure prompt (starship / powerlevel10k / oh-my-zsh)
+- [x] Shell: migrate to zsh and configure prompt (starship)
 - [x] Neovim `init.lua` (LazyVim)
 - [ ] lazygit `config.yml`
 
@@ -18,7 +18,7 @@
 
 ### apt packages
 
-- [ ] Basic: `zsh`, `unzip`, `tar`, `p7zip-full`, `rsync`, `xclip`, `xsel`, `gpg`, `watch`
+- [ ] Basic: `unzip`, `tar`, `p7zip-full`, `rsync`, `xclip`, `xsel`, `gpg`, `watch` (`zsh` addressed in Phase 1)
 - [ ] Build: `cmake`, `pkg-config` (`build-essential` installed)
 - [ ] Libraries: `libssl-dev`, `libffi-dev`, `libsqlite3-dev`, `libbz2-dev`, `libreadline-dev`, `libncurses-dev`, `zlib1g-dev`, `liblzma-dev`
 - [ ] Docker: `docker-ce`, `docker-ce-cli`, `docker-compose-plugin`

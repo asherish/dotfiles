@@ -4,7 +4,13 @@
 
 [core]
     editor = nvim
+{{ if eq .chezmoi.os "windows" }}
+    autocrlf = input
+    sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
 
+[credential]
+    helper = manager
+{{ end }}
 [init]
     defaultBranch = main
 

@@ -1,0 +1,42 @@
+{{ if not .is_container -}}
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_before_04-install-docker.sh.tmpl" | sha256sum }}
+set -euo pipefail
+
+echo "Installing Docker..."
+
+if command -v docker >/dev/null 2>&1; then
+    echo "Docker is already installed."
+    exit 0
+fi
+
+if ! command -v sudo >/dev/null 2>&1; then
+    echo "Error: sudo is not installed."
+    exit 1
+fi
+
+# Add Docker's official GPG key (https://docs.docker.com/engine/install/ubuntu/)
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add Docker's official repository (DEB822 format)
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+sudo apt install -y \
+    docker-ce \
+    docker-ce-cli \
+    containerd.io \
+    docker-buildx-plugin \
+    docker-compose-plugin
+
+# Add current user to docker group
+sudo usermod -aG docker "$(whoami)"
+{{ end -}}

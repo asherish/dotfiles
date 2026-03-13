@@ -11,8 +11,13 @@
 
 # --- Top-level dotfiles ------------------------------------------------------
 
+{{ if .is_container }}
+!.bashrc                       # Bash interactive shell config (container)
+!.profile                      # Bash environment config (container)
+{{ else }}
 !.zshenv                       # Zsh environment config
 !.zshrc                        # Zsh interactive shell config
+{{ end }}
 !.gitconfig                    # Git global config
 
 !.tmux.conf                    # tmux config

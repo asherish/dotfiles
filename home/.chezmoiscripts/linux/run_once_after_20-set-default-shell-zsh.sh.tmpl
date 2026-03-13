@@ -1,3 +1,4 @@
+{{ if not .is_container -}}
 #!/bin/bash
 set -euo pipefail
 
@@ -16,3 +17,4 @@ fi
 echo "Changing default shell to zsh..."
 sudo chsh -s "$ZSH_PATH" "{{ .chezmoi.username }}"
 echo "Default shell changed to zsh. Please re-login for the change to take effect."
+{{ end -}}

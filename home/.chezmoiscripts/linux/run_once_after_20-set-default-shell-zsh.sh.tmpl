@@ -1,0 +1,18 @@
+#!/bin/bash
+set -euo pipefail
+
+ZSH_PATH="$(command -v zsh)"
+
+if [[ -z "$ZSH_PATH" ]]; then
+    echo "Error: zsh not found in PATH."
+    exit 1
+fi
+
+if [[ "$SHELL" == "$ZSH_PATH" ]]; then
+    echo "Default shell is already zsh."
+    exit 0
+fi
+
+echo "Changing default shell to zsh..."
+sudo chsh -s "$ZSH_PATH" "{{ .chezmoi.username }}"
+echo "Default shell changed to zsh. Please re-login for the change to take effect."

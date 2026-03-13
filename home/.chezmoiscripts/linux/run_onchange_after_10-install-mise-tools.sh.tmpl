@@ -1,3 +1,4 @@
+{{ if eq .chezmoi.os "linux" -}}
 #!/bin/bash
 # hash: {{ include "private_dot_config/mise/config.toml.tmpl" | sha256sum }}
 set -euo pipefail
@@ -11,3 +12,4 @@ fi
 
 echo "Installing tools via mise..."
 mise install
+{{ end -}}

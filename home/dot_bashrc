@@ -1,4 +1,4 @@
-# Interactive shell configuration for bash (container environments).
+# Interactive shell configuration for bash (containers and Windows Git Bash).
 
 # Source .profile for environment variables (docker exec does not run login shells).
 if [[ -f "$HOME/.profile" ]]; then
@@ -17,7 +17,7 @@ shopt -s cdspell 2>/dev/null
 shopt -s checkwinsize
 
 # --- Aliases ---
-if [[ -x /usr/bin/dircolors ]]; then
+if command -v dircolors &>/dev/null; then
     eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
@@ -29,7 +29,9 @@ alias l='ls -CF'
 # --- External Tools ---
 
 # mise (Tool Manager)
-if [[ -f "$HOME/.local/bin/mise" ]]; then
+if command -v mise &>/dev/null; then
+    eval "$(mise activate bash)"
+elif [[ -f "$HOME/.local/bin/mise" ]]; then
     eval "$("$HOME/.local/bin/mise" activate bash)"
 fi
 

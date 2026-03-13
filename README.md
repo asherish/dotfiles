@@ -35,7 +35,7 @@ This command will:
 
 - Install chezmoi
 - Clone this repository
-- Run setup scripts (apt packages, Docker, Tailscale, mise, etc.)
+- Run setup scripts (apt packages, Docker, Tailscale, Claude Code, mise, etc.)
 - Deploy all configuration files
 
 Optionally, you can also manually register API keys, SSH keys, or other credentials if needed.

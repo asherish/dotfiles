@@ -1,0 +1,52 @@
+# Interactive shell configuration for zsh.
+
+# --- History ---
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt SHARE_HISTORY
+
+# --- Shell Options ---
+setopt AUTO_CD
+setopt INTERACTIVE_COMMENTS
+setopt NO_BEEP
+
+# --- Completion ---
+autoload -Uz compinit && compinit
+
+# Case-insensitive and partial-word matching (e.g., "d/kaggle" matches "Documents/kaggle")
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+
+# --- Aliases ---
+if [[ -x /usr/bin/dircolors ]]; then
+    eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+fi
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# --- zinit (Plugin Manager) ---
+ZINIT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"
+if [[ ! -f "${ZINIT_HOME}/zinit.zsh" ]]; then
+    mkdir -p "$(dirname "$ZINIT_HOME")"
+    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+source "${ZINIT_HOME}/zinit.zsh"
+
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting  # Must be last plugin
+
+# --- External Tools ---
+
+# mise (Tool Manager)
+if [[ -f "$HOME/.local/bin/mise" ]]; then
+    eval "$("$HOME/.local/bin/mise" activate zsh)"
+fi
+
+# starship (Prompt)
+if command -v starship &>/dev/null; then
+    eval "$(starship init zsh)"
+fi

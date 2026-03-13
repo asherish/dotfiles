@@ -59,6 +59,39 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:asherish/dot
 
 ---
 
+## Windows Setup
+
+### Installing Prerequisites
+
+1. Install [Git for Windows](https://gitforwindows.org/) from the official site
+2. Install [WezTerm](https://wezfurlong.org/wezterm/installation.html) from the official site
+
+### Installing chezmoi and Applying Configuration
+
+Open Git Bash and run:
+
+```bash
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:asherish/dotfiles.git
+```
+
+This command will:
+
+- Install chezmoi
+- Clone this repository
+- Deploy configuration files: `.bashrc`, `.profile`, `.gitconfig`, `.wezterm.lua`, and `.claude/` settings
+
+### What Gets Deployed on Windows
+
+| File | Purpose |
+|------|---------|
+| `.bashrc` | Git Bash interactive shell config |
+| `.profile` | Git Bash environment config |
+| `.gitconfig` | Git global config (with Windows-specific settings) |
+| `.wezterm.lua` | WezTerm terminal emulator config |
+| `.claude/` | Claude Code settings and hooks |
+
+---
+
 ## Daily Workflow
 
 ### Modifying Dotfiles

@@ -50,7 +50,7 @@ Always edit dotfiles in the source directory, not in your home directory. This k
 
 ```bash
 # Edit single file in the source directory
-chezmoi edit ~/.bashrc
+chezmoi edit ~/.zshrc
 ```
 
 Or open entire source directory in editor:
@@ -83,7 +83,7 @@ chezmoi cd
 
 # Stage and commit changes
 git add -A
-git commit -m "Update bashrc"
+git commit -m "Update zshrc"
 
 # Push changes to remote repository
 git push

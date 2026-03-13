@@ -1,0 +1,39 @@
+# Interactive shell configuration for bash (container environments).
+
+# Source .profile for environment variables (docker exec does not run login shells).
+if [[ -f "$HOME/.profile" ]]; then
+    source "$HOME/.profile"
+fi
+
+# --- History ---
+HISTSIZE=10000
+HISTFILESIZE=20000
+HISTCONTROL=ignoreboth
+shopt -s histappend
+
+# --- Shell Options ---
+shopt -s autocd 2>/dev/null
+shopt -s cdspell 2>/dev/null
+shopt -s checkwinsize
+
+# --- Aliases ---
+if [[ -x /usr/bin/dircolors ]]; then
+    eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+fi
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# --- External Tools ---
+
+# mise (Tool Manager)
+if [[ -f "$HOME/.local/bin/mise" ]]; then
+    eval "$("$HOME/.local/bin/mise" activate bash)"
+fi
+
+# starship (Prompt)
+if command -v starship &>/dev/null; then
+    eval "$(starship init bash)"
+fi

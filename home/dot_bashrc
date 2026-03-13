@@ -41,6 +41,11 @@ elif [[ -f "$HOME/.local/bin/mise" ]]; then
     eval "$("$HOME/.local/bin/mise" activate bash)"
 fi
 
+# zoxide (Smart cd)
+if command -v zoxide &>/dev/null; then
+    eval "$(zoxide init bash)"
+fi
+
 # starship (Prompt)
 if command -v starship &>/dev/null; then
     eval "$(starship init bash)"

@@ -52,6 +52,11 @@ if [[ -f "$HOME/.local/bin/mise" ]]; then
     eval "$("$HOME/.local/bin/mise" activate zsh)"
 fi
 
+# zoxide (Smart cd)
+if command -v zoxide &>/dev/null; then
+    eval "$(zoxide init zsh)"
+fi
+
 # starship (Prompt)
 if command -v starship &>/dev/null; then
     eval "$(starship init zsh)"

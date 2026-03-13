@@ -38,7 +38,7 @@
 ## Phase 4: Cross-Platform
 
 - [ ] macOS support (Homebrew, `.chezmoiscripts/darwin/`)
-- [ ] Windows support (winget, PowerShell, `.chezmoiscripts/windows/`)
+- [x] Windows support (Git Bash, WezTerm, `.chezmoiignore` OS branching)
 
 ## Phase 5: Infrastructure & Automation
 

@@ -29,7 +29,15 @@
 - [x] Runtimes: `uv`, `node`, `yarn`
 - [ ] Runtimes: `rust`
 - [x] CLI (installed): `lazygit`, `yazi`, `fzf`, `glow`, `neovim`
-- [ ] CLI (remaining): `lazydocker`, `ripgrep`, `fd`, `sd`, `btop`, `eza`, `bat`, `zoxide`, `delta`
+- [ ] CLI (remaining): `lazydocker`, `ripgrep`, `fd`, `sd`, `btop`, `eza`, `bat`, `zoxide`, `delta`, `jq`, `yq`, `ghq`, `gwq`, `dotenvx`
+
+### zsh plugins (zinit)
+
+- [x] `zsh-autosuggestions`
+- [x] `zsh-syntax-highlighting`
+- [ ] `zsh-sudo`
+- [ ] `zsh-z`
+- [ ] Migrate plugin manager from zinit to sheldon
 
 ### Applications
 

@@ -21,7 +21,7 @@
 - [ ] Basic: `unzip`, `tar`, `p7zip-full`, `rsync`, `xclip`, `xsel`, `gpg`, `watch` (`zsh` addressed in Phase 1)
 - [ ] Build: `cmake`, `pkg-config` (`build-essential` installed)
 - [ ] Libraries: `libssl-dev`, `libffi-dev`, `libsqlite3-dev`, `libbz2-dev`, `libreadline-dev`, `libncurses-dev`, `zlib1g-dev`, `liblzma-dev`
-- [ ] Docker: `docker-ce`, `docker-ce-cli`, `docker-compose-plugin`
+- [x] Docker: `docker-ce`, `docker-ce-cli`, `docker-compose-plugin`
 - [ ] Monitoring: `nvtop`, `aptitude`
 
 ### mise tools

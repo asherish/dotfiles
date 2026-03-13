@@ -1,4 +1,4 @@
-{{ if not .is_container -}}
+{{ if and (eq .chezmoi.os "linux") (not .is_container) -}}
 #!/bin/bash
 # hash: {{ include ".chezmoiscripts/linux/run_onchange_after_12-setup-sshd-accept-env.sh.tmpl" | sha256sum }}
 set -euo pipefail

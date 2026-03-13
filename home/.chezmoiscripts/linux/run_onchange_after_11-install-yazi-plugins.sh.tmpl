@@ -1,3 +1,4 @@
+{{ if eq .chezmoi.os "linux" -}}
 #!/bin/bash
 # package.toml hash: {{ include "private_dot_config/yazi/package.toml" | sha256sum }}
 
@@ -7,4 +8,5 @@ if command -v ya >/dev/null 2>&1; then
 else
   echo "ya not found, skipping yazi plugin install"
 fi
+{{ end -}}
 

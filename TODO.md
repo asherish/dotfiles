@@ -33,7 +33,7 @@
 
 ### Applications
 
-- [x] Claude Code (settings, hooks, CLAUDE.md managed via chezmoi)
+- [x] Claude Code (installation script, settings, hooks, CLAUDE.md managed via chezmoi)
 
 ## Phase 4: Cross-Platform
 

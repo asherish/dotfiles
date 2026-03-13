@@ -10,9 +10,9 @@
 
 ## Phase 2: Container Support
 
-- [ ] Add `is_container` flag to `.chezmoi.toml.tmpl`
-- [ ] Skip apt scripts in containers (packages managed by Dockerfile)
-- [ ] Install only a subset of mise tools in containers (editor + CLI only)
+- [x] Add `is_container` flag to `.chezmoi.toml.tmpl`
+- [x] Skip apt scripts in containers (packages managed by Dockerfile)
+- [x] Install only a subset of mise tools in containers (editor + CLI only)
 
 ## Phase 3: Expand Packages and Tools
 

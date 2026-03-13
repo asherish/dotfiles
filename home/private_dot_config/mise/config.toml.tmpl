@@ -4,9 +4,11 @@ fzf = "latest"
 lazygit = "latest"
 yazi = "latest"
 glow = "latest"
+{{ if not .is_container -}}
 uv = "latest"
 node = "latest"
 yarn = "latest"
+{{ end -}}
 starship = "latest"
 
 [settings]

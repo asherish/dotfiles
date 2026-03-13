@@ -1,7 +1,7 @@
 # dotfiles
 
 Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).  
-Currently supports Ubuntu 24.04 (bare metal and Docker containers), with macOS and Windows support planned.
+Currently supports Ubuntu 24.04 (bare metal and Docker containers) and Windows (Git Bash + WezTerm), with macOS support planned.
 
 ---
 

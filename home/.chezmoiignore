@@ -54,6 +54,9 @@
 !.config/mise                  # mise config
 !.config/mise/**
 
+!.config/sheldon               # sheldon plugin manager config
+!.config/sheldon/**
+
 !.config/yazi                  # Yazi file manager config
 !.config/yazi/**
 {{ end }}

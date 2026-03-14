@@ -29,12 +29,11 @@
 - [x] CLI: `atuin`, `bat`, `btop`, `delta`, `direnv`, `duckdb`, `dust`, `eza`, `fd`, `fzf`, `glow`, `hyperfine`, `jq`, `lazygit`, `navi`, `neovim`, `procs`, `ripgrep`, `starship`, `yazi`, `yq`, `zoxide`
 - [x] CLI (non-container): `dotenvx`, `gh`, `ghq`, `gwq`, `lazydocker`
 
-### zsh plugins (zinit)
+### zsh plugins (sheldon)
 
 - [x] `zsh-autosuggestions`
 - [x] `zsh-syntax-highlighting`
 - [x] `zsh-sudo`
-- [ ] Migrate plugin manager from zinit to sheldon
 
 ### Applications
 

@@ -48,6 +48,23 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting  # Must be last plugin
 
+# --- Functions ---
+
+# Select a ghq-managed repository with fzf and cd into it.
+# If inside tmux, rename the session to the repository name.
+function repo() {
+    local moveto
+    moveto=$(ghq list --full-path | fzf --height 40% --reverse)
+    [[ -z "${moveto}" ]] && return 0
+    cd "${moveto}" || return 1
+
+    if [[ -n ${TMUX} ]]; then
+        local repo_name
+        repo_name="${moveto##*/}"
+        tmux rename-session "${repo_name//./-}"
+    fi
+}
+
 # --- External Tools ---
 
 # mise (Tool Manager)

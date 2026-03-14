@@ -14,7 +14,7 @@ Run following commands to install required packages:
 ```bash
 # Update package lists and install prerequisites
 sudo apt update
-sudo apt install -y curl git gh
+sudo apt install -y curl git
 ```
 
 ### Generating and Registering SSH Keys
@@ -28,7 +28,7 @@ gh ssh-key add ~/.ssh/id_ed25519_github.pub --title "$(whoami)@$(hostname -s)"
 
 ```bash
 # Install chezmoi, clone repository, and apply configuration
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:asherish/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --use-builtin-git true https://github.com/asherish/dotfiles.git
 ```
 
 This command will:
@@ -54,7 +54,7 @@ Apply dotfiles after the container is running:
 
 ```bash
 # Install chezmoi and apply dotfiles inside a running container
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:asherish/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --use-builtin-git true https://github.com/asherish/dotfiles.git
 ```
 
 ---
@@ -71,7 +71,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:asherish/dot
 Open Git Bash and run:
 
 ```bash
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:asherish/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply https://github.com/asherish/dotfiles.git
 ```
 
 This command will:

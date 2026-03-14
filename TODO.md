@@ -35,7 +35,7 @@
 
 - [x] `zsh-autosuggestions`
 - [x] `zsh-syntax-highlighting`
-- [ ] `zsh-sudo`
+- [x] `zsh-sudo`
 - [ ] Migrate plugin manager from zinit to sheldon
 
 ### Applications

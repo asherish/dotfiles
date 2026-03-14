@@ -28,7 +28,7 @@
 
 - [x] Runtimes: `uv`, `node`, `yarn`
 - [ ] Runtimes: `rust`
-- [x] CLI (installed): `lazygit`, `yazi`, `fzf`, `glow`, `neovim`, `direnv`
+- [x] CLI (installed): `lazygit`, `yazi`, `fzf`, `glow`, `neovim`, `direnv`, `atuin`, `dust`, `hyperfine`, `navi`, `procs`, `duckdb`
 - [ ] CLI (remaining): `sd`
 
 ### zsh plugins (zinit)

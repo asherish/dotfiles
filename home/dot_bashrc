@@ -31,6 +31,9 @@ fi
 if command -v btop &>/dev/null; then
     alias htop='btop'
 fi
+if command -v eza &>/dev/null; then
+    alias ls='eza'
+fi
 
 # --- External Tools ---
 

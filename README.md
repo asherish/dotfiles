@@ -17,13 +17,6 @@ sudo apt update
 sudo apt install -y curl git
 ```
 
-### Generating and Registering SSH Keys
-
-```bash
-# Add SSH key to GitHub
-gh ssh-key add ~/.ssh/id_ed25519_github.pub --title "$(whoami)@$(hostname -s)"
-```
-
 ### Installing chezmoi and Applying Configuration
 
 ```bash
@@ -37,6 +30,18 @@ This command will:
 - Clone this repository
 - Run setup scripts (apt packages, Docker, Tailscale, Claude Code, mise, etc.)
 - Deploy all configuration files
+
+### Generating and Registering SSH Keys
+
+After chezmoi has finished setup (which installs `gh` via mise), register your SSH key and switch the remote to SSH:
+
+```bash
+# Add SSH key to GitHub
+gh ssh-key add ~/.ssh/id_ed25519_github.pub --title "$(whoami)@$(hostname -s)"
+
+# Switch remote URL from HTTPS to SSH
+git -C ~/.local/share/chezmoi remote set-url origin git@github.com:asherish/dotfiles.git
+```
 
 Optionally, you can also manually register API keys, SSH keys, or other credentials if needed.
 

@@ -18,9 +18,9 @@
 
 ### apt packages
 
-- [ ] Basic: `unzip`, `tar`, `p7zip-full`, `rsync`, `xclip`, `xsel`, `gpg`, `watch` (`zsh` addressed in Phase 1)
+- [ ] Basic: `unzip`(installed), `tar`, `p7zip-full`, `rsync`, `xclip`, `xsel`, `gpg`, `watch` (`zsh` addressed in Phase 1)
 - [ ] Build: `cmake`, `pkg-config` (`build-essential` installed)
-- [ ] Libraries: `libssl-dev`, `libffi-dev`, `libsqlite3-dev`, `libbz2-dev`, `libreadline-dev`, `libncurses-dev`, `zlib1g-dev`, `liblzma-dev`
+- [x] Libraries: `libssl-dev`, `libffi-dev`, `libsqlite3-dev`, `libbz2-dev`, `libreadline-dev`, `libncurses-dev`, `zlib1g-dev`, `liblzma-dev`
 - [x] Docker: `docker-ce`, `docker-ce-cli`, `docker-compose-plugin`
 - [ ] Monitoring: `nvtop`, `aptitude`
 
@@ -29,7 +29,7 @@
 - [x] Runtimes: `uv`, `node`, `yarn`
 - [ ] Runtimes: `rust`
 - [x] CLI (installed): `lazygit`, `yazi`, `fzf`, `glow`, `neovim`
-- [ ] CLI (remaining): `lazydocker`, `ripgrep`, `fd`, `sd`, `btop`, `eza`, `bat`, `zoxide`, `delta`, `jq`, `yq`, `ghq`, `gwq`, `dotenvx`
+- [ ] CLI (remaining): `sd`
 
 ### zsh plugins (zinit)
 

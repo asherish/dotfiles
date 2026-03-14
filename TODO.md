@@ -2,11 +2,9 @@
 
 ## Phase 1: Enhance Current Dotfiles
 
-### Configuration
-
 - [x] Shell: migrate to zsh and configure prompt (starship)
 - [x] Neovim `init.lua` (LazyVim)
-- [x] lazygit `config.yml`
+- [ ] lazygit `config.yml`
 
 ## Phase 2: Container Support
 
@@ -18,18 +16,18 @@
 
 ### apt packages
 
-- [ ] Basic: `unzip`(installed), `tar`(installed), `p7zip-full`, `rsync`(installed), `xclip`(installed), `xsel`, `gpg`(installed), `watch` (`zsh` addressed in Phase 1)
-- [x] Build: `cmake`, `pkg-config` (`build-essential` installed)
+- [x] Basic: `ca-certificates`, `curl`, `git`, `gpg`, `p7zip-full`, `rsync`, `tar`, `tmux`, `unzip`, `wget`, `xclip`, `zsh`
+- [x] Utilities: `chafa`, `openssh-server`, `poppler-utils`
+- [x] Build: `build-essential`, `cmake`, `pkg-config`
 - [x] Libraries: `libssl-dev`, `libffi-dev`, `libsqlite3-dev`, `libbz2-dev`, `libreadline-dev`, `libncurses-dev`, `zlib1g-dev`, `liblzma-dev`
 - [x] Docker: `docker-ce`, `docker-ce-cli`, `docker-compose-plugin`
-- [ ] Monitoring: `nvtop`(installed), `aptitude`
+- [x] Monitoring: `nvtop`
 
 ### mise tools
 
 - [x] Runtimes: `uv`, `node`, `yarn`
-- [ ] Runtimes: `rust`
-- [x] CLI (installed): `lazygit`, `yazi`, `fzf`, `glow`, `neovim`, `direnv`, `atuin`, `dust`, `hyperfine`, `navi`, `procs`, `duckdb`
-- [ ] CLI (remaining): `sd`
+- [x] CLI: `atuin`, `bat`, `btop`, `delta`, `direnv`, `duckdb`, `dust`, `eza`, `fd`, `fzf`, `glow`, `hyperfine`, `jq`, `lazygit`, `navi`, `neovim`, `procs`, `ripgrep`, `starship`, `yazi`, `yq`, `zoxide`
+- [x] CLI (non-container): `dotenvx`, `gh`, `ghq`, `gwq`, `lazydocker`
 
 ### zsh plugins (zinit)
 
@@ -40,7 +38,7 @@
 
 ### Applications
 
-- [x] Claude Code (installation script, settings, hooks, CLAUDE.md managed via chezmoi)
+- [x] Claude Code (installation script, settings, hooks, CLAUDE.md)
 
 ## Phase 4: Cross-Platform
 
@@ -52,4 +50,3 @@
 - [ ] VS Code extensions bulk install script
 - [ ] Secret management with 1Password CLI
 - [ ] CI testing with GitHub Actions (`chezmoi apply` on clean VM)
-

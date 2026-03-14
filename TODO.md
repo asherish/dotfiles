@@ -5,6 +5,8 @@
 - [x] Shell: migrate to zsh and configure prompt (starship)
 - [x] Neovim `init.lua` (LazyVim)
 - [ ] lazygit `config.yml`
+- [ ] tmux: navi cheatsheet
+- [ ] tmux: VSCode-like session & pane config
 
 ## Phase 2: Container Support
 

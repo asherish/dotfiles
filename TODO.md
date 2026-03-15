@@ -6,7 +6,7 @@
 - [x] Neovim `init.lua` (LazyVim)
 - [ ] lazygit `config.yml`
 - [ ] tmux: navi cheatsheet
-- [ ] tmux: VSCode-like session & pane config
+- [x] tmux: VSCode-like session & pane config
 
 ## Phase 2: Container Support
 

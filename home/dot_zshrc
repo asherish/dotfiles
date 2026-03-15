@@ -12,8 +12,27 @@ setopt AUTO_CD
 setopt INTERACTIVE_COMMENTS
 setopt NO_BEEP
 
+# --- Terminal Title ---
+# Set tmux window name and terminal title to current directory name.
+function precmd_set_title() {
+    local current_dir="${PWD##*/}"
+    if [[ -n "$TMUX" ]]; then
+        [[ "$_tmux_prev_dir" != "$current_dir" ]] || return
+        tmux rename-window "$current_dir"
+        _tmux_prev_dir="$current_dir"
+    else
+        printf '\033]2;%s\033\\' "$current_dir"
+    fi
+}
+precmd_functions+=(precmd_set_title)
+
 # --- Completion ---
-autoload -Uz compinit && compinit
+autoload -Uz compinit
+if [[ -z ~/.zcompdump(#qNmh-24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 
 # Case-insensitive and partial-word matching (e.g., "d/kaggle" matches "Documents/kaggle")
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
@@ -53,12 +72,35 @@ function repo() {
     local moveto
     moveto=$(ghq list --full-path | fzf --height 40% --reverse)
     [[ -z "${moveto}" ]] && return 0
-    cd "${moveto}" || return 1
+    ide "${moveto}"
+}
 
-    if [[ -n ${TMUX} ]]; then
-        local repo_name
-        repo_name="${moveto##*/}"
-        tmux rename-session "${repo_name//./-}"
+# Launch a VS Code-like IDE layout in tmux.
+# Always creates a new window in the "ide" session with 50/50 split.
+# Left pane: nvim. Right pane: terminal.
+# Usage: ide [directory]
+function ide() {
+    local dir="${1:-.}"
+    dir="${dir:a}"
+    [[ -d "$dir" ]] || { echo "ide: invalid directory: $1" >&2; return 1; }
+    local win_name="${dir##*/}"
+
+    if ! tmux has-session -t ide 2>/dev/null; then
+        tmux new-session -d -s ide -c "$dir" -n "$win_name" \; \
+             split-window -t ide -h -l 50% -c "$dir" \; \
+             respawn-pane -k -t ide:.1 "zsh --no-rcs -c \"nvim; exec zsh\"" \; \
+             select-pane -t ide:.1
+    else
+        tmux new-window -t ide -c "$dir" -n "$win_name" \; \
+             split-window -t ide -h -l 50% -c "$dir" \; \
+             respawn-pane -k -t ide:.1 "zsh --no-rcs -c \"nvim; exec zsh\"" \; \
+             select-pane -t ide:.1
+    fi
+
+    if [[ -z "$TMUX" ]]; then
+        tmux attach-session -t ide
+    else
+        tmux switch-client -t ide
     fi
 }
 

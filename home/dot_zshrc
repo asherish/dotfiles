@@ -36,6 +36,9 @@ fi
 if command -v eza &>/dev/null; then
     alias ls='eza'
 fi
+if command -v prek &>/dev/null; then
+    alias pre-commit='prek'
+fi
 
 # --- sheldon (Plugin Manager) ---
 if command -v sheldon &>/dev/null; then

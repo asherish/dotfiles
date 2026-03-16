@@ -75,7 +75,7 @@ When running inside a Docker container, chezmoi automatically detects the contai
 
 - **Shell**: Uses bash instead of zsh
 - **System scripts**: Skips apt package installation, Docker setup, Tailscale setup, and sshd configuration (managed by Dockerfile)
-- **mise tools**: Installs only essential tools (neovim, fzf, lazygit, yazi, glow, starship), skipping uv, node, and yarn
+- **mise tools**: Installs only the "All environments" tools listed above, skipping bare-metal-only tools (uv, node, yarn, ghq, sheldon, etc.)
 
 Apply dotfiles after the container is running:
 

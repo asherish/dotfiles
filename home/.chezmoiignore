@@ -20,6 +20,7 @@
 {{ else }}
 !.zshenv                       # Zsh environment config
 !.zshrc                        # Zsh interactive shell config
+!.p10k.zsh                     # Powerlevel10k prompt config
 {{ end }}
 !.gitconfig                    # Git global config
 
@@ -49,7 +50,11 @@
 !.config/gh                    # GitHub CLI config
 !.config/gh/config.yml         # Exclude hosts.yml as it contains tokens
 
-!.config/starship.toml         # Starship prompt config
+{{ if .is_container }}
+!.config/starship.toml         # Starship prompt config (container only)
+{{ else }}
+.config/starship.toml          # Ignore Starship on bare metal (use Powerlevel10k)
+{{ end }}
 
 !.config/mise                  # mise config
 !.config/mise/**

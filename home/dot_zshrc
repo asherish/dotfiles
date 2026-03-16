@@ -1,3 +1,8 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Interactive shell configuration for zsh.
 
 # --- History ---
@@ -122,7 +127,5 @@ if command -v direnv &>/dev/null; then
     eval "$(direnv hook zsh)"
 fi
 
-# starship (Prompt)
-if command -v starship &>/dev/null; then
-    eval "$(starship init zsh)"
-fi
+# Powerlevel10k (Prompt) — loaded via sheldon, configured via ~/.p10k.zsh
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

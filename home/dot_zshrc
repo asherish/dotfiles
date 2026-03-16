@@ -16,7 +16,7 @@ setopt SHARE_HISTORY
 setopt AUTO_CD
 setopt INTERACTIVE_COMMENTS
 setopt NO_BEEP
-stty -ixon
+[[ -t 0 ]] && stty -ixon
 
 # --- Terminal Title ---
 # Set tmux window name and terminal title to current directory name.
@@ -65,6 +65,13 @@ if command -v prek &>/dev/null; then
     alias pre-commit='prek'
 fi
 
+# --- External Tools ---
+
+# mise (Tool Manager) — must be activated before sheldon, which is installed via mise
+if [[ -f "$HOME/.local/bin/mise" ]]; then
+    eval "$("$HOME/.local/bin/mise" activate zsh)"
+fi
+
 # --- sheldon (Plugin Manager) ---
 if command -v sheldon &>/dev/null; then
     eval "$(sheldon source)"
@@ -109,13 +116,6 @@ function ide() {
         tmux switch-client -t ide
     fi
 }
-
-# --- External Tools ---
-
-# mise (Tool Manager)
-if [[ -f "$HOME/.local/bin/mise" ]]; then
-    eval "$("$HOME/.local/bin/mise" activate zsh)"
-fi
 
 # zoxide (Smart cd)
 if command -v zoxide &>/dev/null; then

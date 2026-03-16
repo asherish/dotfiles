@@ -70,7 +70,7 @@ fi
 # If inside tmux, rename the session to the repository name.
 function repo() {
     local moveto
-    moveto=$(ghq list --full-path | fzf --height 40% --reverse)
+    moveto=$({ ghq list --full-path; echo "${HOME}/.local/share/chezmoi"; } | fzf --height 40% --reverse)
     [[ -z "${moveto}" ]] && return 0
     ide "${moveto}"
 }

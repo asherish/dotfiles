@@ -54,8 +54,10 @@
 !.config/mise                  # mise config
 !.config/mise/**
 
+{{ if not .is_container }}
 !.config/sheldon               # sheldon plugin manager config
 !.config/sheldon/**
+{{ end }}
 
 !.config/yazi                  # Yazi file manager config
 !.config/yazi/**

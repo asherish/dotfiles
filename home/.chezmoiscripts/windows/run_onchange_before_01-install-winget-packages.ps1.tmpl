@@ -1,0 +1,20 @@
+{{ if eq .chezmoi.os "windows" -}}
+# hash: {{ include ".chezmoiscripts/windows/run_onchange_before_01-install-winget-packages.ps1.tmpl" | sha256sum }}
+$ErrorActionPreference = "Stop"
+
+Write-Host "Installing winget packages..."
+
+$packages = @(
+    "wez.wezterm"
+)
+
+foreach ($pkg in $packages) {
+    $installed = winget list --id $pkg --accept-source-agreements 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Installing $pkg..."
+        winget install --id $pkg --accept-package-agreements --accept-source-agreements
+    } else {
+        Write-Host "$pkg is already installed."
+    }
+}
+{{ end -}}

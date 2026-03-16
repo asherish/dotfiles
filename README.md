@@ -130,7 +130,7 @@ This command will:
 
 ---
 
-## Daily Workflow
+## Managing Dotfiles
 
 ### Modifying Dotfiles
 

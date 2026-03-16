@@ -4,6 +4,7 @@
 
 [core]
     editor = nvim
+    pager = delta
 {{ if eq .chezmoi.os "windows" }}
     autocrlf = input
     sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
@@ -13,6 +14,11 @@
 {{ end }}
 [init]
     defaultBranch = main
+
+[delta]
+    navigate = true
+    dark = true
+    line-numbers = true
 
 [ghq]
     root = ~/ghq

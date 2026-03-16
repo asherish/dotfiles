@@ -15,6 +15,7 @@ shopt -s histappend
 shopt -s autocd 2>/dev/null
 shopt -s cdspell 2>/dev/null
 shopt -s checkwinsize
+stty -ixon
 
 # --- Aliases ---
 if command -v dircolors &>/dev/null; then

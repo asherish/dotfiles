@@ -11,6 +11,7 @@ setopt SHARE_HISTORY
 setopt AUTO_CD
 setopt INTERACTIVE_COMMENTS
 setopt NO_BEEP
+stty -ixon
 
 # --- Terminal Title ---
 # Set tmux window name and terminal title to current directory name.

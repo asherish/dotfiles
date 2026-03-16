@@ -5,6 +5,42 @@ Currently supports Ubuntu 24.04 (bare metal and Docker containers) and Windows (
 
 ---
 
+## What's Included
+
+### Managed Configurations
+
+| Category | Details |
+|----------|---------|
+| Shell | zsh (Linux) / bash (container/Windows), starship prompt |
+| Editor | Neovim (LazyVim) |
+| Terminal Multiplexer | tmux (Catppuccin theme, IDE layout) |
+| Terminal Emulator | WezTerm (Windows) |
+| Git | gitconfig, lazygit, delta (diff pager) |
+| File Manager | yazi |
+| Tool Manager | mise |
+| Claude Code | settings, hooks, CLAUDE.md |
+
+### Installed Tools (via mise)
+
+**All environments:**
+
+neovim, fzf, lazygit, yazi, glow, zoxide, jq, yq, bat, btop, eza, ripgrep, fd, delta, direnv, atuin, prek, gh, starship
+
+**Bare metal only (non-container):**
+
+uv, node, yarn, ghq, gwq, dotenvx, lazydocker, duckdb, dust, hyperfine, navi, procs, sheldon
+
+---
+
+## Key Features
+
+- **`repo`** — Select a ghq-managed repository with fzf and open it in an IDE layout
+- **`ide [dir]`** — Create a VS Code-like tmux layout (left: nvim, right: terminal) with 50/50 split
+- **tmux IDE tool switching** — Switch tools in the left pane with `prefix + e/y/g/D/b` or `prefix + Tab` menu (nvim / yazi / lazygit / lazydocker / btop)
+- **Container auto-detection** — Detects container environments via `/.dockerenv` or `container` env var and adjusts installed tools and shell automatically
+
+---
+
 ## Initial Setup on New Machine
 
 ### Installing Prerequisites
@@ -30,20 +66,6 @@ This command will:
 - Clone this repository
 - Run setup scripts (apt packages, Docker, Tailscale, Claude Code, mise, etc.)
 - Deploy all configuration files
-
-### Generating and Registering SSH Keys
-
-After chezmoi has finished setup (which installs `gh` via mise), register your SSH key and switch the remote to SSH:
-
-```bash
-# Add SSH key to GitHub
-gh ssh-key add ~/.ssh/id_ed25519_github.pub --title "$(whoami)@$(hostname -s)"
-
-# Switch remote URL from HTTPS to SSH
-git -C ~/.local/share/chezmoi remote set-url origin git@github.com:asherish/dotfiles.git
-```
-
-Optionally, you can also manually register API keys, SSH keys, or other credentials if needed.
 
 ---
 

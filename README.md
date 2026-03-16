@@ -77,12 +77,33 @@ When running inside a Docker container, chezmoi automatically detects the contai
 - **System scripts**: Skips apt package installation, Docker setup, Tailscale setup, and sshd configuration (managed by Dockerfile)
 - **mise tools**: Installs only the "All environments" tools listed above, skipping bare-metal-only tools (uv, node, yarn, ghq, sheldon, etc.)
 
+### Manual Setup
+
 Apply dotfiles after the container is running:
 
 ```bash
 # Install chezmoi and apply dotfiles inside a running container
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --use-builtin-git true https://github.com/asherish/dotfiles.git
 ```
+
+### Devcontainer Dotfiles
+
+For projects with `devcontainer.json`, dotfiles can be applied automatically:
+
+```bash
+devcontainer up --workspace-folder /path/to/project \
+  --dotfiles-repository https://github.com/asherish/dotfiles.git
+```
+
+Or configure in VS Code settings:
+
+```json
+{
+  "dotfiles.repository": "asherish/dotfiles"
+}
+```
+
+The `install.sh` script at the repo root handles installing chezmoi and applying the configuration automatically.
 
 ---
 

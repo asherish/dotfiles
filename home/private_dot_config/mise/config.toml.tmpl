@@ -40,3 +40,12 @@ navi = "latest"
 # Without this, working inside ~/.local/share/chezmoi causes mise to detect this file's own copy as an untrusted config.
 ignored_config_paths = ["{{ .chezmoi.homeDir }}/.local/share/chezmoi"]
 
+# Disable aqua backend's artifact verification (cosign, SLSA, GitHub Attestations, minisign).
+# These checks hit the GitHub API heavily and cause 403 rate-limit errors on unauthenticated environments
+# (e.g. fresh machines running `chezmoi init --apply` without GITHUB_TOKEN).
+[settings.aqua]
+cosign = false
+slsa = false
+github_attestations = false
+minisign = false
+

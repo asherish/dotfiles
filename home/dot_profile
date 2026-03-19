@@ -3,8 +3,10 @@
 export EDITOR=nvim
 export VISUAL=nvim
 
-# Ensure ~/.local/bin is in PATH
-case ":$PATH:" in
-    *":$HOME/.local/bin:"*) ;;
-    *) export PATH="$HOME/.local/bin:$PATH" ;;
-esac
+# Ensure ~/.local/bin and ~/bin are in PATH
+for dir in "$HOME/.local/bin" "$HOME/bin"; do
+    case ":$PATH:" in
+        *":$dir:"*) ;;
+        *) export PATH="$dir:$PATH" ;;
+    esac
+done

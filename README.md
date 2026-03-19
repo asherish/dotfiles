@@ -57,7 +57,7 @@ sudo apt install -y curl git
 
 ```bash
 # Install chezmoi, clone repository, and apply configuration
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --use-builtin-git true https://github.com/asherish/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply --use-builtin-git true https://github.com/asherish/dotfiles.git
 ```
 
 This command will:
@@ -83,7 +83,7 @@ Apply dotfiles after the container is running:
 
 ```bash
 # Install chezmoi and apply dotfiles inside a running container
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --use-builtin-git true https://github.com/asherish/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply --use-builtin-git true https://github.com/asherish/dotfiles.git
 ```
 
 ### Devcontainer Dotfiles
@@ -118,7 +118,7 @@ The `install.sh` script at the repo root handles installing chezmoi and applying
 Open Git Bash and run:
 
 ```bash
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply https://github.com/asherish/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply https://github.com/asherish/dotfiles.git
 ```
 
 This command will:

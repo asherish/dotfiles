@@ -10,7 +10,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Install chezmoi if not already present.
 if ! command -v chezmoi >/dev/null 2>&1; then
-    sh -c "$(curl -fsLS get.chezmoi.io)"
+    sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
 fi
 
 # Initialize and apply dotfiles from the local clone.

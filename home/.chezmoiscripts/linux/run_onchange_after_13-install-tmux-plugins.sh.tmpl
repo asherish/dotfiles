@@ -15,5 +15,6 @@ if [ ! -d "$TPM_DIR" ]; then
 fi
 
 echo "Installing tmux plugins..."
+tmux kill-server 2>/dev/null
 "$TPM_DIR/bin/install_plugins"
 {{ end -}}

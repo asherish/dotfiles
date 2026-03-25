@@ -1,5 +1,9 @@
 {
   "effortLevel": "high",
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.py"
+  },
   "includeCoAuthoredBy": false,
   "enabledPlugins": {
     "commit-commands@claude-plugins-official": true,

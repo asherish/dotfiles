@@ -73,5 +73,8 @@
 !.claude                       # Claude Code config directory
 !.claude/CLAUDE.md             # Global instructions for Claude Code
 !.claude/settings.json         # Claude Code settings
+!.claude/statusline.py         # Claude Code statusline script
 !.claude/hooks                 # Claude Code hooks directory
 !.claude/hooks/**
+!.claude/skills                # Claude Code skills directory
+!.claude/skills/**

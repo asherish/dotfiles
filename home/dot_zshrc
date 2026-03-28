@@ -72,6 +72,11 @@ if [[ -f "$HOME/.local/bin/mise" ]]; then
     eval "$("$HOME/.local/bin/mise" activate zsh)"
 fi
 
+# mise completions (requires `usage` CLI, installed via mise tools)
+if [[ -f "$HOME/.local/bin/mise" ]] && command -v usage &>/dev/null; then
+    eval "$("$HOME/.local/bin/mise" completion zsh)"
+fi
+
 # --- sheldon (Plugin Manager) ---
 if command -v sheldon &>/dev/null; then
     eval "$(sheldon source)"

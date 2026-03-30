@@ -40,6 +40,9 @@ if command -v prek &>/dev/null; then
 fi
 
 # --- External Tools ---
+# Reset to avoid duplication on re-source
+unset PROMPT_COMMAND
+unset STARSHIP_PROMPT_COMMAND
 
 # mise (Tool Manager)
 if command -v mise &>/dev/null; then

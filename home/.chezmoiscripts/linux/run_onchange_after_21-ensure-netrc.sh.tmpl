@@ -1,0 +1,19 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_21-ensure-netrc.sh.tmpl" | sha256sum }}
+set -euo pipefail
+
+# Ensure ~/.netrc exists as a file (not a directory).
+# Docker creates a directory if the file doesn't exist when bind-mounting.
+if [ -d "$HOME/.netrc" ]; then
+    echo "Warning: ~/.netrc is a directory, removing it..."
+    rmdir "$HOME/.netrc" 2>/dev/null || rm -rf "$HOME/.netrc"
+fi
+
+if [ ! -f "$HOME/.netrc" ]; then
+    echo "Creating ~/.netrc..."
+    touch "$HOME/.netrc"
+fi
+
+chmod 600 "$HOME/.netrc"
+{{ end -}}

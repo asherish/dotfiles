@@ -1,0 +1,31 @@
+{{ if and (eq .chezmoi.os "linux") (not .is_container) -}}
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_before_06-install-drawio.sh.tmpl" | sha256sum }}
+set -euo pipefail
+
+DRAWIO_VERSION="29.6.6"
+
+echo "Installing draw.io Desktop v${DRAWIO_VERSION}..."
+
+if command -v drawio >/dev/null 2>&1; then
+    installed=$(drawio --version 2>/dev/null || true)
+    if [ "$installed" = "$DRAWIO_VERSION" ]; then
+        echo "draw.io Desktop v${DRAWIO_VERSION} is already installed."
+        exit 0
+    fi
+    echo "Upgrading draw.io Desktop from ${installed} to ${DRAWIO_VERSION}..."
+fi
+
+if ! command -v sudo >/dev/null 2>&1; then
+    echo "Error: sudo is not installed."
+    exit 1
+fi
+
+tmpfile=$(mktemp /tmp/drawio-XXXXXX.deb)
+trap 'rm -f "$tmpfile"' EXIT
+
+curl -fsSL -o "$tmpfile" \
+    "https://github.com/jgraph/drawio-desktop/releases/download/v${DRAWIO_VERSION}/drawio-amd64-${DRAWIO_VERSION}.deb"
+
+sudo dpkg -i "$tmpfile" || sudo apt-get install -f -y
+{{ end -}}

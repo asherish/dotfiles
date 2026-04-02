@@ -26,13 +26,6 @@
       }
     ]
   },
-  "mcpServers": {
-    "drawio": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["@jgraph/drawio-mcp"]
-    }
-  },
   "permissions": {
     "defaultMode": "default",
     "allow": [

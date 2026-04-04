@@ -24,6 +24,17 @@
           }
         ]
       }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/log-permission-requests.sh"
+          }
+        ]
+      }
     ]
   },
   "permissions": {

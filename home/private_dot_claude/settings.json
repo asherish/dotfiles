@@ -53,6 +53,7 @@
       "Bash(cat:*)",
       "Bash(head:*)",
       "Bash(tail:*)",
+      "Bash(grep:*)",
 
       "Bash(find:*)",
       "Bash(tree:*)",
@@ -110,6 +111,14 @@
 
       "Bash(ps:*)",
       "Bash(pgrep:*)",
+      "Bash(lsof:*)",
+
+      "Bash(xvfb-run:*)",
+      "Bash(drawio:*)",
+      "Bash(xdg-open:*)",
+
+      "Bash(curl:*)",
+      "Bash(base64:*)",
 
       "Bash(dig:*)",
       "Bash(nslookup:*)",

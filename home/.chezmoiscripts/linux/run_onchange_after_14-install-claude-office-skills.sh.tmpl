@@ -1,0 +1,46 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_14-install-claude-office-skills.sh.tmpl" | sha256sum }}
+set -euo pipefail
+
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+
+REPO="tfriedel/claude-office-skills"
+
+if ! command -v ghq >/dev/null 2>&1; then
+  echo "ghq not found, skipping claude-office-skills install"
+  exit 0
+fi
+
+echo "Installing claude-office-skills..."
+
+# Clone or update the repository
+ghq get -u "$REPO"
+REPO_DIR="$(ghq list -p "$REPO")"
+
+# Install Python dependencies
+if command -v uv >/dev/null 2>&1; then
+  cd "$REPO_DIR"
+  uv venv --allow-existing
+  uv pip install -r requirements.txt
+else
+  echo "uv not found, skipping Python dependencies"
+fi
+
+# Install Node.js dependencies
+if command -v npm >/dev/null 2>&1; then
+  cd "$REPO_DIR"
+  npm install
+else
+  echo "npm not found, skipping Node.js dependencies"
+fi
+
+# Create symlinks
+SKILLS_DIR="$HOME/.claude/skills"
+mkdir -p "$SKILLS_DIR"
+for skill in docx pdf pptx xlsx; do
+  ln -sfn "$REPO_DIR/public/$skill" "$SKILLS_DIR/$skill"
+done
+
+echo "claude-office-skills installed successfully."
+{{ end -}}

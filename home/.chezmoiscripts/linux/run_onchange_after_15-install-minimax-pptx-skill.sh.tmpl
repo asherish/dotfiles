@@ -1,0 +1,27 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_15-install-minimax-pptx-skill.sh.tmpl" | sha256sum }}
+set -euo pipefail
+
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+
+REPO="MiniMax-AI/skills"
+
+if ! command -v ghq >/dev/null 2>&1; then
+  echo "ghq not found, skipping minimax pptx-generator skill install"
+  exit 0
+fi
+
+echo "Installing minimax pptx-generator skill..."
+
+# Clone or update the repository
+ghq get -u "$REPO"
+REPO_DIR="$(ghq list -p "$REPO")"
+
+# Create symlink
+SKILLS_DIR="$HOME/.claude/skills"
+mkdir -p "$SKILLS_DIR"
+ln -sfn "$REPO_DIR/skills/pptx-generator" "$SKILLS_DIR/pptx-generator"
+
+echo "minimax pptx-generator skill installed successfully."
+{{ end -}}

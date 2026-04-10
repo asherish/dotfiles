@@ -1,0 +1,29 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_16-install-maplibre-agent-skills.sh.tmpl" | sha256sum }}
+set -euo pipefail
+
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+
+REPO="maplibre/maplibre-agent-skills"
+
+if ! command -v ghq >/dev/null 2>&1; then
+  echo "ghq not found, skipping maplibre-agent-skills install"
+  exit 0
+fi
+
+echo "Installing maplibre-agent-skills..."
+
+# Clone or update the repository
+ghq get -u "$REPO"
+REPO_DIR="$(ghq list -p "$REPO")"
+
+# Create symlinks
+SKILLS_DIR="$HOME/.claude/skills"
+mkdir -p "$SKILLS_DIR"
+for skill in maplibre-tile-sources maplibre-pmtiles-patterns maplibre-mapbox-migration; do
+  ln -sfn "$REPO_DIR/skills/$skill" "$SKILLS_DIR/$skill"
+done
+
+echo "maplibre-agent-skills installed successfully."
+{{ end -}}

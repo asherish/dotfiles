@@ -10,7 +10,5 @@ if ! grep -q 'TERM_PROGRAM' /etc/ssh/sshd_config; then
 else
   echo "TERM_PROGRAM already in sshd AcceptEnv, skipping."
 fi
-
-sudo systemctl restart ssh
 {{ end -}}
 

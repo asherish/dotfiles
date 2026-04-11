@@ -1,5 +1,6 @@
 {{ if eq .chezmoi.os "linux" -}}
 #!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_17-install-drawio-skill.sh.tmpl" | sha256sum }}
 set -euo pipefail
 
 SKILL_DIR="$HOME/.claude/skills/drawio"

@@ -134,3 +134,6 @@ fi
 
 # Powerlevel10k (Prompt) — loaded via sheldon, configured via ~/.p10k.zsh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Local overrides (e.g., company proxy settings)
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

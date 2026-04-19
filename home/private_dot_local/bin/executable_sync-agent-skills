@@ -1,0 +1,10 @@
+#!/bin/bash
+set -euo pipefail
+
+CLAUDE_SKILLS_DIR="$HOME/.claude/skills"
+CODEX_SKILLS_DIR="$HOME/.codex/skills"
+
+mkdir -p "$CLAUDE_SKILLS_DIR" "$CODEX_SKILLS_DIR"
+
+# Mirror user-installed Claude skills into Codex, but leave Codex's internal .system skills alone.
+rsync -a --delete --exclude='.system' "$CLAUDE_SKILLS_DIR/" "$CODEX_SKILLS_DIR/"

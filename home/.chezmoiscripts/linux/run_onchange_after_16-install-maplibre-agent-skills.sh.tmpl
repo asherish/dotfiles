@@ -18,7 +18,6 @@ echo "Installing maplibre-agent-skills..."
 ghq get -u "$REPO"
 REPO_DIR="$(ghq list -p "$REPO")"
 
-# Create symlinks
 SKILLS_DIR="$HOME/.claude/skills"
 mkdir -p "$SKILLS_DIR"
 for skill in maplibre-tile-sources maplibre-pmtiles-patterns maplibre-mapbox-migration; do

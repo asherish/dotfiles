@@ -1,0 +1,15 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_18-sync-agent-skills.sh.tmpl" | sha256sum }}
+set -euo pipefail
+
+export PATH="$HOME/.local/bin:$PATH"
+
+if ! command -v sync-agent-skills >/dev/null 2>&1; then
+  echo "sync-agent-skills not found, skipping agent skill sync"
+  exit 0
+fi
+
+echo "Syncing Claude skills to Codex..."
+sync-agent-skills
+{{ end -}}

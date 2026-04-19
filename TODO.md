@@ -39,8 +39,8 @@
 
 ### Applications
 
-- [x] Claude Code (settings, hooks, CLAUDE.md)
-- [x] Codex (mise install, MCP config)
+- [x] Claude Code (settings, hooks, CLAUDE.md, external skills)
+- [x] Codex (mise install, external skills)
 
 ## Phase 4: Cross-Platform
 

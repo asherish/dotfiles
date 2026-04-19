@@ -1,0 +1,15 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_19-sync-agent-mcp.sh.tmpl" | sha256sum }}
+set -euo pipefail
+
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+
+if ! command -v sync-agent-mcp >/dev/null 2>&1; then
+  echo "sync-agent-mcp not found, skipping MCP sync"
+  exit 0
+fi
+
+echo "Syncing shared MCP servers to Claude Code and Codex..."
+sync-agent-mcp
+{{ end -}}

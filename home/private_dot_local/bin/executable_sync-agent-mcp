@@ -1,0 +1,126 @@
+#!/bin/bash
+set -euo pipefail
+
+CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/agent/mcp-servers.json"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/agent-sync/mcp"
+
+if [[ ! -f "$CONFIG_PATH" ]]; then
+  echo "MCP sync config not found at $CONFIG_PATH, skipping"
+  exit 0
+fi
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo "jq not found, skipping MCP sync"
+  exit 0
+fi
+
+mkdir -p "$STATE_DIR"
+
+remove_from_agents() {
+  local name="$1"
+
+  if command -v claude >/dev/null 2>&1; then
+    claude mcp remove --scope user "$name" >/dev/null 2>&1 || true
+  fi
+
+  if command -v codex >/dev/null 2>&1; then
+    codex mcp remove "$name" >/dev/null 2>&1 || true
+  fi
+}
+
+sync_to_claude() {
+  local name="$1"
+  local server_json="$2"
+
+  if command -v claude >/dev/null 2>&1; then
+    claude mcp add-json --scope user "$name" "$server_json" >/dev/null
+  fi
+}
+
+sync_to_codex() {
+  local name="$1"
+  local server_json="$2"
+
+  if ! command -v codex >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if jq -e '.url? != null' >/dev/null <<<"$server_json"; then
+    local url
+    url="$(jq -r '.url' <<<"$server_json")"
+    local -a cmd=(codex mcp add "$name" --url "$url")
+
+    if jq -e '.bearerTokenEnvVar? != null' >/dev/null <<<"$server_json"; then
+      cmd+=(--bearer-token-env-var "$(jq -r '.bearerTokenEnvVar' <<<"$server_json")")
+    fi
+
+    "${cmd[@]}" >/dev/null
+    return 0
+  fi
+
+  local command
+  command="$(jq -r '.command // empty' <<<"$server_json")"
+  if [[ -z "$command" ]]; then
+    echo "Skipping $name: unsupported MCP config (missing url or command)" >&2
+    return 0
+  fi
+
+  local -a cmd=(codex mcp add "$name")
+  local env_entry
+  while IFS= read -r env_entry; do
+    cmd+=(--env "$env_entry")
+  done < <(jq -r '.env // {} | to_entries[] | "\(.key)=\(.value)"' <<<"$server_json")
+
+  cmd+=(-- "$command")
+
+  local arg
+  while IFS= read -r arg; do
+    cmd+=("$arg")
+  done < <(jq -r '.args[]?' <<<"$server_json")
+
+  "${cmd[@]}" >/dev/null
+}
+
+declare -A current_hashes=()
+
+while IFS= read -r name; do
+  server_json="$(jq -c --arg name "$name" '.mcpServers[$name]' "$CONFIG_PATH")"
+  current_hashes["$name"]="$(printf '%s' "$server_json" | sha256sum | awk '{print $1}')"
+done < <(jq -r '.mcpServers | keys[]?' "$CONFIG_PATH")
+
+shopt -s nullglob
+for state_file in "$STATE_DIR"/*.sha256; do
+  state_name="$(basename "$state_file" .sha256)"
+  if [[ -z "${current_hashes[$state_name]+x}" ]]; then
+    echo "Removing MCP server from managed sync: $state_name"
+    remove_from_agents "$state_name"
+    rm -f "$state_file"
+  fi
+done
+shopt -u nullglob
+
+for name in "${!current_hashes[@]}"; do
+  server_json="$(jq -c --arg name "$name" '.mcpServers[$name]' "$CONFIG_PATH")"
+  state_file="$STATE_DIR/$name.sha256"
+  current_hash="${current_hashes[$name]}"
+  previous_hash=""
+
+  if [[ -f "$state_file" ]]; then
+    previous_hash="$(<"$state_file")"
+  fi
+
+  if [[ "$current_hash" == "$previous_hash" ]]; then
+    continue
+  fi
+
+  if [[ -n "$previous_hash" ]]; then
+    echo "Updating MCP server: $name"
+    remove_from_agents "$name"
+  else
+    echo "Adding MCP server: $name"
+  fi
+
+  sync_to_claude "$name" "$server_json"
+  sync_to_codex "$name" "$server_json"
+  printf '%s\n' "$current_hash" >"$state_file"
+done

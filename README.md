@@ -19,7 +19,7 @@ Currently supports Ubuntu 24.04 (bare metal and Docker containers) and Windows (
 | File Manager | yazi |
 | Tool Manager | mise |
 | Claude Code | settings, hooks, CLAUDE.md, external skills |
-| Codex | CLI install via mise, external skills |
+| Codex | CLI install via mise, synced MCP config, external skills |
 
 ### Installed Tools (via mise)
 
@@ -66,7 +66,7 @@ This command will:
 - Install chezmoi
 - Clone this repository
 - Install managed tools via mise (including Codex CLI on non-container Linux)
-- Deploy all configuration files and install shared external skills
+- Deploy all configuration files, sync shared MCP servers to Claude Code and Codex, and install shared external skills
 
 ---
 

@@ -19,6 +19,7 @@ Currently supports Ubuntu 24.04 (bare metal and Docker containers) and Windows (
 | File Manager | yazi |
 | Tool Manager | mise |
 | Claude Code | settings, hooks, CLAUDE.md |
+| Codex | CLI install via mise, MCP config |
 
 ### Installed Tools (via mise)
 
@@ -28,7 +29,7 @@ neovim, fzf, lazygit, yazi, glow, zoxide, jq, yq, bat, btop, eza, ripgrep, fd, d
 
 **Bare metal only (non-container):**
 
-uv, node, yarn, ghq, gwq, dotenvx, lazydocker, duckdb, dust, hyperfine, navi, procs, sheldon
+uv, node, yarn, ghq, gwq, dotenvx, lazydocker, duckdb, dust, hyperfine, navi, procs, sheldon, Codex CLI
 
 ---
 
@@ -64,8 +65,8 @@ This command will:
 
 - Install chezmoi
 - Clone this repository
-- Run setup scripts (apt packages, Docker, Tailscale, Claude Code, mise, etc.)
-- Deploy all configuration files
+- Install managed tools via mise (including Codex CLI on non-container Linux)
+- Deploy all configuration files, including Claude Code and Codex settings
 
 ---
 
@@ -75,7 +76,7 @@ When running inside a Docker container, chezmoi automatically detects the contai
 
 - **Shell**: Uses bash instead of zsh
 - **System scripts**: Skips apt package installation, Docker setup, Tailscale setup, and sshd configuration (managed by Dockerfile)
-- **mise tools**: Installs only the "All environments" tools listed above, skipping bare-metal-only tools (uv, node, yarn, ghq, sheldon, etc.)
+- **mise tools**: Installs only the "All environments" tools listed above, skipping bare-metal-only tools (uv, node, yarn, ghq, sheldon, Codex CLI, etc.)
 
 ### Manual Setup
 
@@ -185,4 +186,3 @@ chezmoi update
 ```
 
 This runs `git pull` and `chezmoi apply` in one step to synchronize your home directory with the source directory.
-

@@ -39,7 +39,8 @@
 
 ### Applications
 
-- [x] Claude Code (installation script, settings, hooks, CLAUDE.md)
+- [x] Claude Code (settings, hooks, CLAUDE.md)
+- [x] Codex (mise install, MCP config)
 
 ## Phase 4: Cross-Platform
 

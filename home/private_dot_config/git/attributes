@@ -1,0 +1,14 @@
+# LaTeX
+*.tex  diff=latex
+*.bib  diff=bibtex
+*.cls  diff=latex
+*.sty  diff=latex
+*.dtx  diff=latex
+
+# Binary files
+*.pdf  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.eps  binary
+*.gif  binary

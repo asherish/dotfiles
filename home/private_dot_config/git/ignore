@@ -1,0 +1,24 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.synctex.gz
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.out
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.run.xml
+*.bcf
+*-blx.bib
+*.xdv
+*.pdfsync
+
+# OS artifacts
+.DS_Store
+Thumbs.db

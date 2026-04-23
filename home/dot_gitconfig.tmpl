@@ -8,6 +8,8 @@
 {{ if eq .chezmoi.os "windows" }}
     autocrlf = input
     sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
+    excludesFile = ~/.config/git/ignore
+    attributesFile = ~/.config/git/attributes
 
 [credential]
     helper = manager
@@ -22,4 +24,10 @@
 
 [ghq]
     root = ~/ghq
+
+[diff "latex"]
+    wordRegex = "\\\\[a-zA-Z]+|[a-zA-Z]+|[^[:space:]]"
+
+[diff "bibtex"]
+    wordRegex = "@[a-zA-Z]+\\{[^,]+|[a-zA-Z]+=|[^[:space:]]"
 

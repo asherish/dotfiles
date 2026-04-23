@@ -1,6 +1,5 @@
 {{ if eq .chezmoi.os "linux" -}}
 #!/bin/bash
-# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_18-sync-agent-skills.sh.tmpl" | sha256sum }}
 set -euo pipefail
 
 export PATH="$HOME/.local/bin:$PATH"

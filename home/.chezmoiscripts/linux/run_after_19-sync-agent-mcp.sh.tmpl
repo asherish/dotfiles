@@ -1,6 +1,5 @@
 {{ if eq .chezmoi.os "linux" -}}
 #!/bin/bash
-# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_19-sync-agent-mcp.sh.tmpl" | sha256sum }}
 set -euo pipefail
 
 export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"

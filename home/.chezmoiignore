@@ -23,6 +23,7 @@
 !.p10k.zsh                     # Powerlevel10k prompt config
 {{ end }}
 !.gitconfig                    # Git global config
+!.latexmkrc                    # latexmk build config
 
 {{ if ne .chezmoi.os "windows" }}
 !.tmux.conf                    # tmux config (Linux only)
@@ -66,6 +67,10 @@
 
 !.config/yazi                  # Yazi file manager config
 !.config/yazi/**
+
+!.config/git                   # Git global config (XDG)
+!.config/git/ignore            # Global gitignore
+!.config/git/attributes        # Global gitattributes
 {{ end }}
 
 # --- .claude/* ---------------------------------------------------------------

@@ -1,0 +1,58 @@
+{{ if and (eq .chezmoi.os "linux") (not .is_container) -}}
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_08-install-latex-packages.sh.tmpl" | sha256sum }}
+set -euo pipefail
+
+export PATH="$HOME/.local/bin:$PATH"
+
+if ! command -v tlmgr >/dev/null 2>&1; then
+    echo "tlmgr not found, skipping LaTeX package installation."
+    exit 0
+fi
+
+echo "Installing LaTeX packages via tlmgr..."
+
+tlmgr install \
+    acmart          \
+    ieeetran        \
+    amsmath         \
+    amscls          \
+    amsfonts        \
+    mathtools       \
+    algorithm2e     \
+    algorithmicx    \
+    booktabs        \
+    colortbl        \
+    pgf             \
+    pgfplots        \
+    subcaption      \
+    xcolor          \
+    natbib          \
+    biblatex        \
+    biber           \
+    microtype       \
+    hyperref        \
+    cleveref        \
+    latexmk         \
+    times           \
+    libertine       \
+    newtx           \
+    caption         \
+    float           \
+    geometry        \
+    graphicx        \
+    fancyhdr        \
+    etoolbox        \
+    xstring         \
+    environ         \
+    totpages        \
+    trimspaces      \
+    manyfoot        \
+    ncctools        \
+    comment         \
+    balance         \
+    preprint        \
+    tools
+
+echo "LaTeX packages installed."
+{{ end -}}

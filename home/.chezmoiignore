@@ -78,3 +78,9 @@
 !.claude/hooks/**
 !.claude/skills                # Claude Code skills directory
 !.claude/skills/**
+
+# --- .local/bin/* ------------------------------------------------------------
+
+!.local                        # XDG local data base directory
+!.local/bin                    # User-local executable directory
+!.local/bin/**                 # Sync helpers and local utility scripts

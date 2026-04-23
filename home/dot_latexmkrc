@@ -1,0 +1,11 @@
+# Default to pdflatex
+$pdf_mode = 1;
+
+# Always run bibtex/biber when needed, and delete .bbl on clean
+$bibtex_use = 2;
+
+# Enable SyncTeX for editor forward/inverse search
+$pdflatex = 'pdflatex -synctex=1 %O %S';
+
+# Extra extensions to clean
+$clean_ext .= ' %R.synctex.gz %R.run.xml %R.bcf %R-blx.bib';

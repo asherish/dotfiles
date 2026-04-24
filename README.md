@@ -29,7 +29,7 @@ neovim, fzf, lazygit, yazi, glow, zoxide, jq, yq, bat, btop, eza, ripgrep, fd, d
 
 **Bare metal only (non-container):**
 
-uv, node, yarn, ghq, gwq, dotenvx, lazydocker, duckdb, dust, hyperfine, navi, procs, sheldon, Codex CLI
+uv, node, yarn, ghq, gwq, dotenvx, lazydocker, duckdb, dust, hyperfine, navi, procs, sheldon, Codex CLI, TinyTeX
 
 ---
 

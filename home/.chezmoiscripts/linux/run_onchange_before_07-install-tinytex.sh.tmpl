@@ -1,0 +1,35 @@
+{{ if and (eq .chezmoi.os "linux") (not .is_container) -}}
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_before_07-install-tinytex.sh.tmpl" | sha256sum }}
+set -euo pipefail
+
+TINYTEX_DIR="$HOME/.TinyTeX"
+LOCAL_BIN="$HOME/.local/bin"
+
+echo "Installing TinyTeX..."
+
+# Skip if already installed and pdflatex is on PATH. The official installer
+# deletes $TEXDIR on re-run, which would wipe any tlmgr-installed packages.
+if [ -d "$TINYTEX_DIR" ] && command -v pdflatex >/dev/null 2>&1; then
+    echo "TinyTeX is already installed at $TINYTEX_DIR."
+    exit 0
+fi
+
+mkdir -p "$LOCAL_BIN"
+
+export TINYTEX_DIR
+wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+
+# Explicitly link core binaries into ~/.local/bin instead of relying on the
+# installer's auto-detection.
+TINYTEX_BIN="$(find "$TINYTEX_DIR/bin" -maxdepth 1 -mindepth 1 -type d | head -n1)"
+if [ -n "$TINYTEX_BIN" ]; then
+    for tool in pdflatex xelatex lualatex bibtex biber tlmgr latexmk kpsewhich fmtutil-sys; do
+        if [ -x "$TINYTEX_BIN/$tool" ]; then
+            ln -sf "$TINYTEX_BIN/$tool" "$LOCAL_BIN/$tool"
+        fi
+    done
+fi
+
+echo "TinyTeX installed at $TINYTEX_DIR"
+{{ end -}}

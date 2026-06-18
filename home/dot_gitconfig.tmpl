@@ -31,3 +31,8 @@
 [diff "bibtex"]
     wordRegex = "@[a-zA-Z]+\\{[^,]+|[a-zA-Z]+=|[^[:space:]]"
 
+# Read machine-local git settings if present (not managed by chezmoi).
+# Placed last so its values override the global [user] above.
+[include]
+    path = ~/.config/git/config.local
+

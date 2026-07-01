@@ -1,4 +1,5 @@
 {
+  "model": "claude-sonnet-5",
   "effortLevel": "max",
   "includeCoAuthoredBy": false,
   "permissions": {

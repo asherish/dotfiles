@@ -1,0 +1,13 @@
+[Unit]
+Description=Claude Science server
+After=network-online.target
+
+[Service]
+ExecStart=%h/.local/bin/claude-science serve --no-browser --port 47300
+# The daemon exits cleanly on purpose (e.g. after sign-in when the active org
+# changes, or on self-update), expecting its supervisor to relaunch it.
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

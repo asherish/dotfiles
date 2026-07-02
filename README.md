@@ -19,6 +19,7 @@ Currently supports Ubuntu 24.04 (bare metal and Docker containers) and Windows (
 | File Manager | yazi |
 | Tool Manager | mise |
 | Claude Code | settings, hooks, shared agent instructions, external skills |
+| Claude Science | install script, systemd user service (port 47300, bare metal only) |
 | Codex | CLI install via mise, shared agent instructions, synced MCP config, external skills |
 
 ### Installed Tools (via mise)
@@ -128,6 +129,42 @@ This command will:
 - Clone this repository
 - Install winget packages (WezTerm)
 - Deploy configuration files: `.bashrc`, `.profile`, `.gitconfig`, `.wezterm.lua`, and `.claude/` settings
+
+---
+
+## Claude Science
+
+On bare-metal Linux, `chezmoi apply` installs [Claude Science](https://claude.com/product/claude-science) and runs it as a systemd user service. The web UI listens on `127.0.0.1:47300` (sandbox on `47301`), so access from another machine goes through SSH port forwarding.
+
+### Accessing from a Windows Browser
+
+1. Add port forwarding to the target host in `~/.ssh/config` on Windows:
+
+   ```
+   Host <linux-host>
+       LocalForward 47300 127.0.0.1:47300
+       LocalForward 47301 127.0.0.1:47301
+   ```
+
+   Port 47301 serves the sandboxed HTML previews; without it, previews will not render.
+
+2. Connect via SSH, then run `claude-science url` on the remote machine and open the printed URL (`http://localhost:47300/?nonce=...`) in the Windows browser. The nonce is a single-use login link that expires after about three minutes; re-run the command to get a fresh one.
+
+3. On first use, sign in with a Claude account (Pro/Max/Team/Enterprise plan required). If the OAuth redirect fails through the tunnel, use the "Paste a code" option on the sign-in screen.
+
+4. The browser session persists afterwards; until the server restarts, `http://localhost:47300` works directly.
+
+### Managing the Service
+
+```bash
+systemctl --user status claude-science         # Check status
+systemctl --user stop claude-science           # Stop temporarily (auto-starts on next boot)
+systemctl --user start claude-science          # Start again
+systemctl --user disable --now claude-science  # Disable auto-start entirely
+journalctl --user -u claude-science -f         # Follow logs
+```
+
+Note: `chezmoi apply` re-enables the service only when the install script or the unit file changes.
 
 ---
 

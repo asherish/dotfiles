@@ -71,6 +71,12 @@
 !.config/git                   # Git global config (XDG)
 !.config/git/ignore            # Global gitignore
 !.config/git/attributes        # Global gitattributes
+
+{{ if not .is_container }}
+!.config/systemd               # systemd user units (bare metal only)
+!.config/systemd/user
+!.config/systemd/user/claude-science.service
+{{ end }}
 {{ end }}
 
 # --- .claude/* ---------------------------------------------------------------

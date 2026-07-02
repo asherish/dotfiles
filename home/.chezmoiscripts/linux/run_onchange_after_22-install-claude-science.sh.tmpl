@@ -1,0 +1,50 @@
+{{ if and (eq .chezmoi.os "linux") (not .is_container) -}}
+#!/bin/bash
+# hash: {{ include ".chezmoiscripts/linux/run_onchange_after_22-install-claude-science.sh.tmpl" | sha256sum }}
+# service hash: {{ include "private_dot_config/systemd/user/claude-science.service" | sha256sum }}
+set -euo pipefail
+
+export PATH="$HOME/.local/bin:$PATH"
+
+echo "Installing Claude Science..."
+
+# Sandbox prerequisite checks
+if ! command -v bwrap >/dev/null 2>&1; then
+    echo "Warning: bubblewrap is not installed. Claude Science sandbox will not work."
+fi
+# Ubuntu 23.10+ restricts unprivileged user namespaces via AppArmor, which breaks
+# bwrap (Launchpad #2046844). Grant userns to bwrap only, via a dedicated profile,
+# instead of disabling the restriction system-wide.
+if [ "$(sysctl -n kernel.apparmor_restrict_unprivileged_userns 2>/dev/null || echo 0)" = "1" ] \
+    && [ ! -f /etc/apparmor.d/bwrap ]; then
+    echo "Configuring AppArmor profile to allow bwrap user namespaces..."
+    sudo tee /etc/apparmor.d/bwrap >/dev/null <<'EOF'
+abi <abi/4.0>,
+include <tunables/global>
+
+profile bwrap /usr/bin/bwrap flags=(unconfined) {
+  userns,
+
+  include if exists <local/bwrap>
+}
+EOF
+    sudo apparmor_parser -r /etc/apparmor.d/bwrap
+fi
+
+if ! command -v claude-science >/dev/null 2>&1; then
+    curl -fsSL https://claude.ai/install-claude-science.sh | bash
+else
+    echo "Claude Science is already installed."
+fi
+
+# Enable and (re)start the systemd user service (unit deployed by chezmoi)
+if command -v systemctl >/dev/null 2>&1 && systemctl --user status >/dev/null 2>&1; then
+    systemctl --user daemon-reload
+    systemctl --user enable claude-science.service
+    systemctl --user restart claude-science.service
+    # Keep the service running without an active login session (best effort)
+    loginctl enable-linger "$USER" 2>/dev/null || true
+else
+    echo "Warning: systemd user session not available; start manually with 'claude-science serve'."
+fi
+{{ end -}}

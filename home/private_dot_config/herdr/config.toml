@@ -132,6 +132,7 @@ new_worktree = ""  # freed for the lazygit popup below; use `herdr worktree` CLI
 key = "prefix+t"
 type = "popup"
 command = "herdr-repo-picker"
+description = "open repository as workspace"
 width = "60%"
 height = "60%"
 
@@ -140,18 +141,21 @@ height = "60%"
 key = "prefix+f"
 type = "shell"
 command = "herdr plugin action invoke open-file-viewer-tab --plugin herdr-file-viewer"
+description = "file viewer tab"
 
 # Diff review: hunk worktree diff in its own tab (herdr-plugin-hunk).
 [[keys.command]]
 key = "prefix+d"
 type = "shell"
 command = "herdr plugin action invoke worktree-tab --plugin hunk.diff"
+description = "hunk diff tab"
 
 # Git operations: lazygit in a popup.
 [[keys.command]]
 key = "prefix+shift+g"
 type = "popup"
 command = "lazygit"
+description = "lazygit"
 width = "90%"
 height = "90%"
 

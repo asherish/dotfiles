@@ -127,6 +127,14 @@ detach = "prefix+d"
 # width = "80%"
 # height = "80%"
 
+# Open a ghq repository as a new workspace via fzf (script in ~/.local/bin).
+[[keys.command]]
+key = "prefix+f"
+type = "popup"
+command = "herdr-repo-picker"
+width = "60%"
+height = "60%"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]

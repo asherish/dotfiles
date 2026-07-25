@@ -68,6 +68,9 @@
 !.config/yazi                  # Yazi file manager config
 !.config/yazi/**
 
+!.config/herdr                 # herdr terminal multiplexer config
+!.config/herdr/**
+
 !.config/git                   # Git global config (XDG)
 !.config/git/ignore            # Global gitignore
 !.config/git/attributes        # Global gitattributes

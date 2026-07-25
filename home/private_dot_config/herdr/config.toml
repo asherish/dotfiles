@@ -71,7 +71,7 @@ prefix = "ctrl+s"
 # workspace_picker = "prefix+w"
 # goto = "prefix+g"
 # new_workspace = "prefix+shift+n"
-# new_worktree = "prefix+shift+g"
+new_worktree = ""  # freed for the lazygit popup below; use `herdr worktree` CLI instead
 # open_worktree = ""    # optional, unset by default
 # remove_worktree = ""  # optional, unset by default; opens confirmation
 # rename_workspace = "prefix+shift+w"
@@ -146,6 +146,14 @@ command = "herdr plugin action invoke open-file-viewer-tab --plugin herdr-file-v
 key = "prefix+d"
 type = "shell"
 command = "herdr plugin action invoke worktree-tab --plugin hunk.diff"
+
+# Git operations: lazygit in a popup.
+[[keys.command]]
+key = "prefix+shift+g"
+type = "popup"
+command = "lazygit"
+width = "90%"
+height = "90%"
 
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.

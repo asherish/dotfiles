@@ -1,0 +1,25 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+
+if ! command -v herdr >/dev/null 2>&1; then
+  echo "herdr not found, skipping herdr plugin install"
+  exit 0
+fi
+
+plugins=(
+  smarzban/herdr-file-viewer
+)
+
+installed="$(herdr plugin list 2>/dev/null)"
+for plugin in "${plugins[@]}"; do
+  name="${plugin##*/}"
+  if echo "$installed" | grep -q "$name"; then
+    echo "herdr plugin $name is already installed."
+  else
+    echo "Installing herdr plugin $plugin..."
+    herdr plugin install "$plugin" -y
+  fi
+done
+{{ end -}}

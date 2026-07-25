@@ -141,6 +141,12 @@ key = "prefix+f"
 type = "shell"
 command = "herdr plugin action invoke open-file-viewer --plugin herdr-file-viewer"
 
+# Diff review: hunk worktree diff in a split pane (herdr-plugin-hunk).
+[[keys.command]]
+key = "prefix+d"
+type = "shell"
+command = "herdr plugin action invoke worktree-split --plugin hunk.diff"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]

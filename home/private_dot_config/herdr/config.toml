@@ -135,11 +135,11 @@ command = "herdr-repo-picker"
 width = "60%"
 height = "60%"
 
-# File view: git-aware read-only file viewer in a split pane (herdr-file-viewer plugin).
+# File view: git-aware read-only file viewer in its own tab (herdr-file-viewer plugin).
 [[keys.command]]
 key = "prefix+f"
 type = "shell"
-command = "herdr plugin action invoke open-file-viewer --plugin herdr-file-viewer"
+command = "herdr plugin action invoke open-file-viewer-tab --plugin herdr-file-viewer"
 
 # Diff review: hunk worktree diff in a split pane (herdr-plugin-hunk).
 [[keys.command]]

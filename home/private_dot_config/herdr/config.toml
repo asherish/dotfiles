@@ -70,7 +70,7 @@ prefix = "ctrl+s"
 # open_notification_target = "prefix+o"
 # workspace_picker = "prefix+w"
 # goto = "prefix+g"
-# new_workspace = "prefix+shift+n"
+new_workspace = ""  # freed for the repo picker below; default was "prefix+shift+n"
 new_worktree = ""  # freed for the lazygit popup below; use `herdr worktree` CLI instead
 # open_worktree = ""    # optional, unset by default
 # remove_worktree = ""  # optional, unset by default; opens confirmation
@@ -129,7 +129,7 @@ new_worktree = ""  # freed for the lazygit popup below; use `herdr worktree` CLI
 
 # Open a ghq repository as a new workspace via fzf (script in ~/.local/bin).
 [[keys.command]]
-key = "prefix+t"
+key = "prefix+shift+n"
 type = "popup"
 command = "herdr-repo-picker"
 description = "open repository as workspace"

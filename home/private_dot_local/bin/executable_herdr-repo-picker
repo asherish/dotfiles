@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Pick a ghq-managed repository with fzf and open it as a new herdr workspace.
+# Intended to run inside a herdr popup (see [[keys.command]] in herdr config).
+set -euo pipefail
+
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+
+moveto=$({ ghq list --full-path; echo "$HOME/.local/share/chezmoi"; } | fzf --reverse) || exit 0
+[[ -z "$moveto" ]] && exit 0
+
+herdr workspace create --cwd "$moveto" --label "$(basename "$moveto")" --focus >/dev/null

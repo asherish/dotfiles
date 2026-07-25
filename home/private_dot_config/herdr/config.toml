@@ -155,7 +155,7 @@ description = "hunk diff tab"
 key = "prefix+shift+g"
 type = "popup"
 command = "lazygit"
-description = "lazygit"
+description = "lazygit popup"
 width = "90%"
 height = "90%"
 

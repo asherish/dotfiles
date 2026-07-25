@@ -1,0 +1,6 @@
+# herdr-file-viewer plugin config.
+# Full reference: config.example.toml in the plugin folder (`herdr plugin list` shows the path).
+
+[keys]
+open_in_editor = ["e", "Enter"]  # open in $EDITOR; Enter displaces the default activate binding
+activate = "o"                   # re-home activate (expand/collapse dir, zoom file); default was Enter

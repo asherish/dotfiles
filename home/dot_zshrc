@@ -127,6 +127,20 @@ function ide() {
     fi
 }
 
+# In WezTerm, route interactive `ssh` through `wezterm ssh` so remote graphics
+# protocols (Kitty/Sixel, e.g. images in herdr) bypass the Windows ConPTY layer
+# and render. In any other terminal, or non-interactively (scripts; scp/rsync/git
+# use the real binary regardless), fall back to the normal ssh. Use `command ssh`
+# to force the real binary — e.g. when you need port forwarding, which
+# `wezterm ssh` does not fully honor.
+function ssh() {
+    if [[ $- == *i* && "$TERM_PROGRAM" == "WezTerm" ]] && command -v wezterm &>/dev/null; then
+        wezterm ssh "$@"
+    else
+        command ssh "$@"
+    fi
+}
+
 # Display an image inline at high quality using the iTerm2 graphics protocol.
 # On this Windows/WezTerm setup, iTerm2 (OSC) is the only protocol that survives
 # the Windows ConPTY layer between Git Bash and WezTerm; sixel/kitty (DCS/APC)

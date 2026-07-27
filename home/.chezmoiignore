@@ -31,6 +31,14 @@
 !.tmux/**
 {{ else }}
 !.wezterm.lua                  # WezTerm terminal emulator config (Windows only)
+
+# PowerToys Keyboard Manager config (Windows only)
+!AppData
+!AppData/Local
+!AppData/Local/Microsoft
+!AppData/Local/Microsoft/PowerToys
+!AppData/Local/Microsoft/PowerToys/Keyboard Manager
+!AppData/Local/Microsoft/PowerToys/Keyboard Manager/default.json
 {{ end }}
 
 # --- .config/* (Linux only) --------------------------------------------------

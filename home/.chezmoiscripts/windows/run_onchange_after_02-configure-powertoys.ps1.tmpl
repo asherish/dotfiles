@@ -1,0 +1,44 @@
+{{ if eq .chezmoi.os "windows" -}}
+# hash: {{ include ".chezmoiscripts/windows/run_onchange_after_02-configure-powertoys.ps1.tmpl" | sha256sum }}
+$ErrorActionPreference = "Stop"
+
+$settingsPath = "$env:LOCALAPPDATA\Microsoft\PowerToys\settings.json"
+
+if (-not (Test-Path $settingsPath)) {
+    Write-Host "PowerToys settings.json not found. Start PowerToys first, then run 'chezmoi apply' again."
+    exit 0
+}
+
+$content = Get-Content $settingsPath -Raw
+if ($content -notmatch '"Keyboard Manager"\s*:\s*false') {
+    Write-Host "Keyboard Manager is already enabled."
+    exit 0
+}
+
+# Stop all PowerToys processes
+Write-Host "Stopping PowerToys..."
+Get-Process -Name "PowerToys*" -ErrorAction SilentlyContinue | Stop-Process -Force
+
+# Wait until all PowerToys processes have exited
+$timeout = 30
+$elapsed = 0
+while ((Get-Process -Name "PowerToys*" -ErrorAction SilentlyContinue) -and ($elapsed -lt $timeout)) {
+    Start-Sleep -Seconds 1
+    $elapsed++
+}
+
+# Replace the setting in-place to preserve original formatting
+$content = Get-Content $settingsPath -Raw
+$content = $content -replace '"Keyboard Manager"\s*:\s*false', '"Keyboard Manager":true'
+[System.IO.File]::WriteAllText($settingsPath, $content)
+Write-Host "Enabled Keyboard Manager in PowerToys settings."
+
+# Restart PowerToys
+$powerToysExe = "$env:LOCALAPPDATA\PowerToys\PowerToys.exe"
+if (Test-Path $powerToysExe) {
+    Write-Host "Restarting PowerToys..."
+    Start-Process $powerToysExe
+} else {
+    Write-Host "PowerToys executable not found. Please start PowerToys manually."
+}
+{{ end -}}

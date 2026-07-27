@@ -148,6 +148,13 @@ function img() {
         echo "img: file not found: ${f:-<none>}" >&2
         return 1
     fi
+    # herdr swallows iTerm2 OSC; with kitty_graphics on (config.toml [experimental])
+    # and a ConPTY-free outer terminal such as `wezterm ssh`, it renders the Kitty
+    # protocol instead. iTerm2 does not reach the terminal inside herdr.
+    if [[ -n "${HERDR_ENV:-}" ]] && command -v chafa &>/dev/null; then
+        chafa -f kitty "$f"
+        return
+    fi
     # tmux passthrough drops payloads well before the direct-SSH limit, so use a
     # smaller default budget inside tmux (override with IMG_MAXBYTES). Note that
     # images shown through tmux are erased on scroll/redraw (tmux is not image-aware).

@@ -1,6 +1,6 @@
 {
-  "model": "claude-fable-5[1m]",
-  "effortLevel": "max",
+  "model": "opus",
+  "effortLevel": "high",
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
@@ -167,5 +167,10 @@
   "tui": "fullscreen",
   "theme": "dark",
   "skipAutoPermissionPrompt": true,
-  "skipWorkflowUsageWarning": true
+  "skipWorkflowUsageWarning": true,
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  }
 }

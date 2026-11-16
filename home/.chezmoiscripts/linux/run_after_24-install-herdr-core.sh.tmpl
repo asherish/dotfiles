@@ -1,0 +1,87 @@
+{{ if and (eq .chezmoi.os "linux") (not .is_container) -}}
+#!/bin/bash
+# Install herdr-core (hc), the terminal runtime that the Herdr desktop app
+# drives over SSH, and keep it on the latest release.
+#
+# Why the official installer instead of mise: install.sh installs to
+# ~/.local/bin/herdr-core and later swaps the binary in place with
+# `hc update --from`, so running terminals survive an update. A core installed
+# through a package manager is not updated by the Herdr app.
+#
+# Why no version pin: the Herdr app moves its local core to the latest release
+# after it updates itself, so the remote follows the latest release as well.
+#
+# Runs on every apply (run_after_) because run_onchange_ would never pick up a
+# new release. The per-apply cost is one small latest.json request; a binary is
+# downloaded only when a newer release exists. Network or release-server
+# failures print a warning and never fail `chezmoi apply`.
+set -uo pipefail
+
+export PATH="$HOME/.local/bin:$PATH"
+
+releases="https://releases.herdr.dev/core"
+bin="$HOME/.local/bin/herdr-core"
+curl_opts=(-fsSL --connect-timeout 5 --max-time 30)
+
+if ! command -v curl >/dev/null 2>&1; then
+  echo "Warning: curl not found, skipping herdr-core install/update."
+  exit 0
+fi
+
+# --- Fresh install -------------------------------------------------------------
+
+if [ ! -x "$bin" ]; then
+  if other="$(command -v herdr-core 2>/dev/null)"; then
+    echo "herdr-core at $other is managed outside ~/.local/bin, skipping (update it with its own tool)."
+    exit 0
+  fi
+
+  tmp="$(mktemp -d)"
+  trap 'rm -rf "$tmp"' EXIT
+  if ! curl "${curl_opts[@]}" -o "$tmp/install.sh" "$releases/install.sh"; then
+    echo "Warning: could not reach releases.herdr.dev, skipping herdr-core install."
+    exit 0
+  fi
+
+  echo "Installing herdr-core..."
+  if ! sh "$tmp/install.sh"; then
+    echo "Warning: herdr-core install failed; re-run 'chezmoi apply' to retry."
+  fi
+  exit 0
+fi
+
+# --- Update to the latest release ----------------------------------------------
+
+latest="$(curl "${curl_opts[@]}" "$releases/latest.json" 2>/dev/null \
+  | grep -o '"version"[[:space:]]*:[[:space:]]*"[^"]*"' \
+  | head -n 1 \
+  | sed 's/.*"\([^"]*\)"$/\1/')"
+if [ -z "$latest" ]; then
+  echo "Warning: could not fetch the latest herdr-core version from releases.herdr.dev, skipping update."
+  exit 0
+fi
+
+current="$("$bin" --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -n 1)"
+if [ -n "$current" ] \
+  && [ "$(printf '%s\n%s\n' "$latest" "$current" | sort -V | tail -n 1)" = "$current" ]; then
+  echo "herdr-core $current is up to date."
+  exit 0
+fi
+
+echo "Updating herdr-core ${current:-(unknown)} -> $latest..."
+# Never pass --force: a release from another protocol generation is refused,
+# which keeps the remote compatible with the local core of the Herdr app.
+if output="$("$bin" update 2>&1)"; then
+  [ -n "$output" ] && echo "$output"
+  exit 0
+fi
+
+[ -n "$output" ] && echo "$output"
+if echo "$output" | grep -qi 'generation'; then
+  echo "Warning: herdr-core $latest belongs to another protocol generation and was not installed."
+  echo "  The Herdr desktop app may need updating first; then re-run 'chezmoi apply'."
+else
+  echo "Warning: herdr-core update failed; re-run 'chezmoi apply' to retry."
+fi
+exit 0
+{{ end -}}

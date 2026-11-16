@@ -1,0 +1,50 @@
+{{ if and (eq .chezmoi.os "linux") (not .is_container) -}}
+#!/bin/bash
+# Enable systemd linger for the current user so the user manager keeps running
+# after the last login ends. This keeps the herdr-core server, which the Herdr
+# desktop app drives over SSH, alive along with its remote terminals and agents.
+#
+# Runs on every apply and does nothing once Linger=yes. Otherwise it escalates
+# step by step: polkit self-service without sudo, then sudo only when attached
+# to a terminal, and finally prints the command to run by hand. It never fails
+# `chezmoi apply`.
+set -uo pipefail
+
+if ! command -v loginctl >/dev/null 2>&1; then
+  echo "loginctl not found, skipping linger setup"
+  exit 0
+fi
+
+user="${USER:-$(id -un)}"
+
+linger_enabled() {
+  # show-user fails for a user with no session and no linger; treat that as "no".
+  [ "$(loginctl show-user "$user" -p Linger --value 2>/dev/null)" = "yes" ]
+}
+
+if linger_enabled; then
+  exit 0
+fi
+
+echo "Enabling linger for $user..."
+
+# Step 1: without sudo (allowed by polkit for an active local session).
+loginctl enable-linger "$user" 2>/dev/null || true
+if linger_enabled; then
+  echo "Linger enabled."
+  exit 0
+fi
+
+# Step 2: with sudo, only when someone is at the terminal to answer a prompt.
+if [ -t 0 ] && [ -t 1 ]; then
+  if sudo loginctl enable-linger -- "$user" && linger_enabled; then
+    echo "Linger enabled."
+    exit 0
+  fi
+fi
+
+# Step 3: leave it to the user.
+echo "Warning: could not enable linger; user services and herdr-core terminals stop at logout."
+echo "  Run once on this machine: sudo loginctl enable-linger -- $user"
+exit 0
+{{ end -}}

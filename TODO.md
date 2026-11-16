@@ -41,6 +41,7 @@
 
 - [x] Claude Code (settings, hooks, shared agent instructions, external skills)
 - [x] Codex (mise install, shared agent instructions, synced MCP config, external skills)
+- [x] Herdr remote access: herdr-core on bare-metal Linux (official installer, updated on every apply, linger), Herdr desktop app on Windows
 
 ## Phase 4: Cross-Platform
 

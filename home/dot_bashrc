@@ -5,6 +5,11 @@ if [[ -f "$HOME/.profile" ]]; then
     source "$HOME/.profile"
 fi
 
+# Stop here for non-interactive shells. Bash sources ~/.bashrc even for
+# non-interactive commands run over SSH, where tools such as herdr-core speak a
+# byte protocol on stdout, so nothing below may run or print.
+[[ $- == *i* ]] || return
+
 # --- History ---
 HISTSIZE=10000
 HISTFILESIZE=20000

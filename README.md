@@ -1,7 +1,7 @@
 # dotfiles
 
 Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).  
-Currently supports Ubuntu 24.04 (bare metal and Docker containers) and Windows (Git Bash + WezTerm), with macOS support planned.
+Currently supports Ubuntu 22.04 / 24.04 (bare metal and Docker containers) and Windows (Git Bash + WezTerm), with macOS support planned.
 
 ---
 
@@ -19,6 +19,7 @@ Currently supports Ubuntu 24.04 (bare metal and Docker containers) and Windows (
 | File Manager | yazi |
 | Tool Manager | mise |
 | Claude Code | settings, hooks, shared agent instructions, external skills |
+| Herdr | herdr-core via official installer, updated on every apply (bare metal only); Herdr desktop app (Windows) |
 | Codex | CLI install via mise, shared agent instructions, synced MCP config, external skills |
 
 ### Installed Tools (via mise)
@@ -127,7 +128,45 @@ This command will:
 - Install chezmoi
 - Clone this repository
 - Install winget packages (WezTerm)
+- Install the Herdr desktop app with its official installer, if missing
 - Deploy configuration files: `.bashrc`, `.profile`, `.gitconfig`, `.wezterm.lua`, and `.claude/` settings
+
+---
+
+## Remote Access from the Herdr Desktop App
+
+The [Herdr desktop app](https://github.com/herdrdev/herdr-app) can run terminals on a remote Linux machine over SSH. On the remote side, the terminals live in [herdr-core](https://github.com/herdrdev/herdr-core) (`hc`).
+
+- **Windows**: `chezmoi apply` installs the app with its official installer if it is missing (this also installs the local herdr-core). After that, the app updates itself and moves its local core to the latest release.
+- **Bare-metal Linux**: `chezmoi apply` installs herdr-core into `~/.local/bin` and updates it to the latest release on every run, so the remote does not fall behind the app's core. It also enables systemd linger so remote terminals survive logout. Network failures only print a warning.
+
+Machine registrations are per-device state and are not managed by these dotfiles.
+
+### Adding a Remote Machine
+
+1. Apply the dotfiles on the remote Linux machine (see [Initial Setup on New Machine](#initial-setup-on-new-machine)).
+
+2. On Windows, make sure `ssh <ssh-config-host>` logs in with an SSH key or ssh-agent without any prompt. hc connects non-interactively and does not support password logins. Accept the host key once by connecting manually.
+
+3. Check that a non-interactive login finds `hc` and prints nothing extra:
+
+   ```bash
+   ssh <ssh-config-host> hc --version   # Prints the version
+   ssh <ssh-config-host> true | wc -c   # Prints 0
+   ```
+
+4. Add the machine in the app via **Settings → Machines → Add machine**, or from a terminal:
+
+   ```bash
+   hc machine add <ssh-config-host> --name <name>
+   ```
+
+### Notes
+
+- Choose the machine name up front and avoid renaming it after adding.
+- The connection carries a byte protocol over SSH, so the remote login must not print anything to stdout (for example, an `echo` in `~/.zshenv`).
+- If `hc machine ls` shows `! stops at logout`, linger is not enabled on the remote. Run `sudo loginctl enable-linger -- <user>` there once, or re-run `chezmoi apply` in a terminal there and let it use sudo. The warning clears automatically.
+- If `chezmoi apply` on the remote warns that a herdr-core release belongs to another protocol generation, update the Herdr desktop app first, then re-run `chezmoi apply`.
 
 ---
 

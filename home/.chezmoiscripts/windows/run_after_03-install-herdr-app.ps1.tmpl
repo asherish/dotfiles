@@ -1,0 +1,29 @@
+{{ if eq .chezmoi.os "windows" -}}
+# Install the Herdr desktop app (herdr-app) with the official installer when it
+# is missing. The installer also installs herdr-core if none is present. Later
+# updates are left to the app's background self-update, which also moves its
+# local herdr-core to the latest release.
+#
+# winget is not used: there is no official winget package for the app
+# (Herdr.Herdr is the herdr TUI, and a winget-installed Herdr.HerdrCore is not
+# updated by the app).
+#
+# Runs on every apply (run_after_) so that a failed install is retried next
+# time; failures only warn, and run_onchange_ would record them as done. Once
+# installed, the check is local and needs no network.
+$ErrorActionPreference = "Stop"
+
+$appExe = Join-Path $env:LOCALAPPDATA "Programs\herdr-app\herdr-app.exe"
+if ((Test-Path $appExe) -or (Get-Command herdr-app -ErrorAction SilentlyContinue)) {
+    Write-Host "Herdr desktop app is already installed."
+    exit 0
+}
+
+Write-Host "Installing Herdr desktop app..."
+try {
+    Invoke-RestMethod -Uri "https://releases.herdr.dev/app/install.ps1" -TimeoutSec 30 | Invoke-Expression
+} catch {
+    Write-Warning "Herdr desktop app install failed: $($_.Exception.Message) Re-run 'chezmoi apply' to retry."
+}
+exit 0
+{{ end -}}

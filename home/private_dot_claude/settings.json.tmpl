@@ -129,6 +129,20 @@
     "defaultMode": "auto"
   },
   "hooks": {
+{{- if and (eq .chezmoi.os "linux") (not .is_container) }}
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": {{ printf "bash '%s/.claude/hooks/herdr-agent-state.sh' session" .chezmoi.homeDir | toJson }},
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+{{- end }}
     "UserPromptSubmit": [
       {
         "matcher": "",

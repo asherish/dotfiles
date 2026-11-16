@@ -1,0 +1,49 @@
+{{ if and (eq .chezmoi.os "linux") (not .is_container) -}}
+#!/bin/bash
+# Install or refresh herdr's Claude Code integration (the herdr TUI only; the
+# hook reports session identity for restore and does nothing under herdr-core).
+#
+# The SessionStart hook entry itself is managed in .claude/settings.json.tmpl
+# in herdr's exact canonical form. herdr matches its entries by exact command
+# string and skips writing settings.json when the result is unchanged, so this
+# script only drops in the hook script (herdr-agent-state.sh). If a future herdr
+# changes the canonical entry, `chezmoi diff` will show it; update the template.
+#
+# Runs on every apply; the check is local and needs no network. Failures only
+# print a warning and never fail `chezmoi apply`.
+set -uo pipefail
+
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+
+# herdr 0.9.1 narrowed the SessionStart matcher to the form in settings.json.tmpl;
+# older releases would write their own entry and cause a diff.
+min_version="0.9.1"
+
+if ! command -v herdr >/dev/null 2>&1; then
+  echo "herdr not found, skipping herdr Claude integration"
+  exit 0
+fi
+
+if [ ! -d "$HOME/.claude" ]; then
+  echo "$HOME/.claude not found, skipping herdr Claude integration"
+  exit 0
+fi
+
+version="$(herdr --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -n 1)"
+if [ -z "$version" ] \
+  || [ "$(printf '%s\n%s\n' "$min_version" "$version" | sort -V | head -n 1)" != "$min_version" ]; then
+  echo "Warning: herdr ${version:-(unknown)} is older than $min_version; skipping herdr Claude integration."
+  echo "  Upgrade herdr (mise upgrade github:herdrdev/herdr), then re-run 'chezmoi apply'."
+  exit 0
+fi
+
+if herdr integration status 2>/dev/null | grep -q '^claude: current '; then
+  exit 0
+fi
+
+echo "Installing herdr Claude integration..."
+if ! herdr integration install claude; then
+  echo "Warning: herdr Claude integration install failed; re-run 'chezmoi apply' to retry."
+fi
+exit 0
+{{ end -}}

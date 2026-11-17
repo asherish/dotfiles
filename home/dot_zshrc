@@ -97,35 +97,6 @@ function repo() {
     fi
 }
 
-# Launch a VS Code-like IDE layout in tmux.
-# Always creates a new window in the "ide" session with 50/50 split.
-# Left pane: yazi. Right pane: terminal.
-# Usage: ide [directory]
-function ide() {
-    local dir="${1:-.}"
-    dir="${dir:a}"
-    [[ -d "$dir" ]] || { echo "ide: invalid directory: $1" >&2; return 1; }
-    local win_name="${dir##*/}"
-
-    if ! tmux has-session -t ide 2>/dev/null; then
-        tmux new-session -d -s ide -c "$dir" -n "$win_name" \; \
-             split-window -t ide -h -l 50% -c "$dir" \; \
-             respawn-pane -k -t ide:.1 "zsh --no-rcs -c \"yazi; exec zsh\"" \; \
-             select-pane -t ide:.1
-    else
-        tmux new-window -t ide -c "$dir" -n "$win_name" \; \
-             split-window -t ide -h -l 50% -c "$dir" \; \
-             respawn-pane -k -t ide:.1 "zsh --no-rcs -c \"yazi; exec zsh\"" \; \
-             select-pane -t ide:.1
-    fi
-
-    if [[ -z "$TMUX" ]]; then
-        tmux attach-session -t ide
-    else
-        tmux switch-client -t ide
-    fi
-}
-
 # In WezTerm, route interactive `ssh` through `wezterm ssh` so remote graphics
 # protocols (Kitty/Sixel, e.g. images in herdr) bypass the Windows ConPTY layer
 # and render. In any other terminal, or non-interactively (scripts; scp/rsync/git

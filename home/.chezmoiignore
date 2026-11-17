@@ -27,8 +27,6 @@
 
 {{ if ne .chezmoi.os "windows" }}
 !.tmux.conf                    # tmux config (Linux only)
-!.tmux                         # tmux plugin/script directory
-!.tmux/**
 {{ else }}
 !.wezterm.lua                  # WezTerm terminal emulator config (Windows only)
 

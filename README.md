@@ -36,7 +36,8 @@ uv, node, yarn, ghq, gwq, dotenvx, lazydocker, duckdb, dust, hyperfine, navi, pr
 
 ## Key Features
 
-- **`repo`** — Select a ghq-managed repository with fzf and open it in an IDE layout
+- **`repo`** — Select a ghq-managed repository with fzf and `cd` into it; inside herdr, also rename the current workspace to the repository name
+- **herdr repo picker** — `prefix + Shift + N` opens a ghq-managed repository as a new herdr workspace
 - **`ide [dir]`** — Create a VS Code-like tmux layout (left: nvim, right: terminal) with 50/50 split
 - **tmux IDE tool switching** — Switch tools in the left pane with `prefix + e/y/g/D/b` or `prefix + Tab` menu (nvim / yazi / lazygit / lazydocker / btop)
 - **Container auto-detection** — Detects container environments via `/.dockerenv` or `container` env var and adjusts installed tools and shell automatically

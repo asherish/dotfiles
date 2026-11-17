@@ -84,17 +84,16 @@ fi
 
 # --- Functions ---
 
-# Select a ghq-managed repository with fzf and open it.
-# herdr: creates a new workspace rooted at the repository.
-# tmux: opens the repository in the "ide" session layout.
+# Select a ghq-managed repository with fzf and cd into it in the current shell.
+# Inside herdr, also rename the current workspace to the repository name.
+# To open a repository as a new herdr workspace instead, use prefix+shift+n.
 function repo() {
-    local moveto
-    moveto=$({ ghq list --full-path; echo "${HOME}/.local/share/chezmoi"; } | fzf --height 40% --reverse)
-    [[ -z "${moveto}" ]] && return 0
-    if [[ -n "$HERDR_ENV" ]]; then
-        herdr workspace create --cwd "${moveto}" --label "${moveto##*/}" --focus >/dev/null
-    else
-        ide "${moveto}"
+    local dir
+    dir=$({ ghq list --full-path; echo "${HOME}/.local/share/chezmoi"; } | fzf --height 40% --reverse) || return 0
+    [[ -z "${dir}" ]] && return 0
+    cd "${dir}" || return
+    if [[ -n "$HERDR_WORKSPACE_ID" ]]; then
+        herdr workspace rename "$HERDR_WORKSPACE_ID" "${dir:t}" >/dev/null
     fi
 }
 
